@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#006a4e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="BRTA Bus Fare">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="favicon_io/apple-touch-icon.png">
+    <title data-lang-bn="বাংলাদেশ সড়ক পরিবহন কর্তৃপক্ষ (বিআরটিএ) কর্তৃক নির্ধারিত বাস ভাড়া" data-lang-en="BANGLADESH ROAD TRANSPORT AUTHORITY (BRTA) APPROVED BUS FARE">বাংলাদেশ সড়ক পরিবহন কর্তৃপক্ষ (বিআরটিএ) কর্তৃক নির্ধারিত বাস ভাড়া</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo-container">
+                <img src="BRTA_Logo.png" alt="BRTA Logo" class="brta-logo">
+                        <div class="logo-text-group">
+                    <span class="logo-text-en" data-lang-bn="বাংলাদেশ সড়ক পরিবহন কর্তৃপক্ষ (বিআরটিএ) কর্তৃক নির্ধারিত বাস ভাড়া" data-lang-en="BANGLADESH ROAD TRANSPORT AUTHORITY (BRTA) APPROVED BUS FARE">বাংলাদেশ সড়ক পরিবহন কর্তৃপক্ষ (বিআরটিএ) কর্তৃক নির্ধারিত বাস ভাড়া</span>
+                </div>
+                <button class="lang-toggle" id="lang-toggle" aria-label="Switch language">
+                    <span class="lang-bn active">বাংলা</span>
+                    <span class="lang-en">English</span>
+                </button>
+            </div>
+
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-bg" style="background-image: url('brta_bus_hero.png');"></div>
+            <div class="container">
+                <div class="search-card">
+                    <!-- Row 1: From + Swap + To -->
+                    <div class="row g-2 align-items-end">
+                        <div class="col-12 col-sm-5">
+                            <div class="input-group">
+                                <label data-lang-bn="যাত্রা শুরুর স্থান" data-lang-en="Starting Point">From (যাত্রা শুরুর স্থান)</label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-location-arrow icon-green"></i>
+                                    <input type="text" data-placeholder-bn="Start Location" data-placeholder-en="Starting Point" placeholder="Start Location" id="from-location">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-2 col-md-auto col-lg-auto col-xl-auto text-center">
+                            <div class="swap-icon">
+                                <i class="fa-solid fa-right-left"></i>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-5">
+                            <div class="input-group">
+                                <label data-lang-bn="গন্তব্য" data-lang-en="Destination">To (যাত্রা শেষ / গন্তব্য)</label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-location-dot icon-red"></i>
+                                    <input type="text" data-placeholder-bn="Destination" data-placeholder-en="Destination" placeholder="Destination" id="to-location">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: VIEW FARE button (full width standalone row) -->
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <button class="btn-search w-100" id="btn-search" data-lang-bn="ভাড়া দেখুন" data-lang-en="VIEW FARE">VIEW FARE</button>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Fare boxes side by side -->
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <div class="dual-fare-group">
+                                <div class="input-group">
+                                    <label><i class="fa-solid fa-bus"></i> <span data-lang-bn="৫১ সিটের বাস ভাড়া" data-lang-en="51 Seat Fare">51 Seat Fare (৫১ সিটের বাস ভাড়া)</span></label>
+                                    <div class="input-wrapper fare-wrapper fare-51-box">
+                                        <i class="fa-solid fa-money-bill-wave icon-green"></i>
+                                        <input type="text" data-placeholder-bn="৳ — টাকা" data-placeholder-en="৳ — Taka" placeholder="৳ — টাকা" id="fare-display-51" readonly>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label><i class="fa-solid fa-bus"></i> <span data-lang-bn="৪০ সিটের বাস ভাড়া" data-lang-en="40 Seat Fare">40 Seat Fare (৪০ সিটের বাস ভাড়া)</span></label>
+                                    <div class="input-wrapper fare-wrapper fare-40-box">
+                                        <i class="fa-solid fa-money-bill-wave icon-green"></i>
+                                        <input type="text" data-placeholder-bn="৳ — টাকা" data-placeholder-en="৳ — Taka" placeholder="৳ — টাকা" id="fare-display-40" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 4: Distance + Route No -->
+                    <div class="row g-2 info-row">
+                        <div class="col-12 col-sm-6">
+                            <div class="input-group">
+                                <label><i class="fa-solid fa-road"></i> <span data-lang-bn="মোট দূরত্ব" data-lang-en="Distance">Distance (মোট দূরত্ব)</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-road icon-green"></i>
+                                    <input type="text" data-placeholder-bn="— কিঃমিঃ" data-placeholder-en="— km" placeholder="— কিঃমিঃ" id="distance-display" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="input-group">
+                                <label><i class="fa-solid fa-route"></i> <span data-lang-bn="রুট নম্বর" data-lang-en="Route No">Route No (রুট নম্বর)</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-route icon-green"></i>
+                                    <input type="text" placeholder="—" id="route-no-display" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="route-results" id="route-results"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="notice-section container">
+            <div class="notice-card">
+                <div class="notice-header">
+                    <div class="notice-icon">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </div>
+                    <h2 data-lang-bn="বিআরটিএ নির্দেশিকা" data-lang-en="BRTA Instructions (General Notice)">বিআরটিএ নির্দেশিকা (General Notice)</h2>
+                </div>
+
+                <div class="notice-content">
+                    <p>
+                        <strong>বিঃদ্রঃ-</strong> সওজ হতে প্রাপ্ত দূরত্ব এবং প্রযোজ্য ক্ষেত্রে বিআইডব্লিউটিসি, বাংলাদেশ সেতু কর্তৃপক্ষ ও সওজ এর ব্রিজ, টোল ও ফেরী ভাড়ার তালিকা অনুসরণ করা হয়েছে। দূরত্ব/ভাড়ার পরিমাণ কম/বেশি হলে, যথাযথ প্রমাণ সাপেক্ষে বিআরটিএ কর্তৃক আনুপাতিক হারে ভাড়া নির্ধারণের ব্যবস্থা গ্রহণ করা হবে। এই ভাড়ার তালিকা বিআরটিএ'র ওয়েবসাইট <a href="https://brta.gov.bd" target="_blank">brta.gov.bd</a>-তে পাওয়া যাবে।
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <a href="https://wa.me/8801675115659" target="_blank" rel="noopener noreferrer" class="whatsapp-float">
+        <div class="whatsapp-label" data-lang-bn="কারিগরি সমস্যায় হোয়াটসঅ্যাপ করুন" data-lang-en="WhatsApp for technical issues">WhatsApp for technical issues</div>
+        <div class="whatsapp-icon">
+            <i class="fa-brands fa-whatsapp"></i>
+        </div>
+    </a>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <img src="BRTA_Logo.png" alt="BRTA Logo" class="footer-logo">
+                    <div class="footer-brand-text">
+                        <span class="footer-brand-bn" data-lang-bn="বাংলাদেশ সড়ক পরিবহন কর্তৃপক্ষ" data-lang-en="Bangladesh Road Transport Authority">বাংলাদেশ সড়ক পরিবহন কর্তৃপক্ষ</span>
+                        <span class="footer-brand-en" data-lang-bn="বিআরটিএ" data-lang-en="BRTA">BRTA</span>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <a href="https://brta.gov.bd" target="_blank" rel="noopener noreferrer" class="footer-link">
+                        <i class="fa-solid fa-globe"></i>
+                        <span>brta.gov.bd</span>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom">
+                <p data-lang-bn="© ২০২৬ মোহাম্মদ মনসুর হাবীব | সর্বস্বত্ব সংরক্ষিত" data-lang-en="© 2026 Mohammad Monsur Habib | All rights reserved.">© 2026 Mohammad Monsur Habib | All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script defer src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js').catch(function(err) {
+                console.warn('Service Worker registration failed:', err);
+            });
+        }
+    </script>
+</body>
+</html>

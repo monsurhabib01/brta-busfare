@@ -1,0 +1,12 @@
+{
+  "name": "brta-bus-fare",
+  "private": true,
+  "version": "1.0.0",
+  "description": "BRTA bus fare viewer - static site, no build required. Open index.html directly in a browser.",
+  "scripts": {
+    "sync": "node sync-from-xlsx.js"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  }
+}
