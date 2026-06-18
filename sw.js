@@ -1,6 +1,7 @@
-const CACHE_NAME = 'brta-bus-fare-v3';
+const CACHE_NAME = 'brta-bus-fare-v4';
 
 const PRECACHE_URLS = [
+    '/',
     './index.html',
     './style.css',
     './script.js',
