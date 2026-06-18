@@ -2,7 +2,7 @@
     "name": "বাংলাদেশ সড়ক পরিবহন কর্তৃপক্ষ নির্ধারিত বাস ভাড়া - BRTA Bus Fare",
     "short_name": "BRTA Bus Fare",
     "description": "BRTA prescribed bus fare search and route information for Bangladesh",
-    "start_url": "./index.html",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#f4f7f6",
     "theme_color": "#006a4e",
