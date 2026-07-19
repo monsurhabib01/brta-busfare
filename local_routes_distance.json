@@ -1,0 +1,557 @@
+{
+  "A 101": {
+    "distance_km": 28.8,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 102": {
+    "distance_km": 16.9,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 105": {
+    "distance_km": 15.1,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 110": {
+    "distance_km": 16.7,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 111": {
+    "distance_km": 17,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 114": {
+    "distance_km": 18.3,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 115": {
+    "distance_km": 17.6,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 119": {
+    "distance_km": 18.3,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 122": {
+    "distance_km": 22,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 127": {
+    "distance_km": 12,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 129": {
+    "distance_km": 25.7,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 131": {
+    "distance_km": 16,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 132": {
+    "distance_km": 47.5,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 137": {
+    "distance_km": 14.6,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 138": {
+    "distance_km": 23.3,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 141": {
+    "distance_km": 18.2,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 142": {
+    "distance_km": 16.7,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 143": {
+    "distance_km": 15,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 157": {
+    "distance_km": 14,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 160": {
+    "distance_km": 16.2,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 161": {
+    "distance_km": 20.5,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 166": {
+    "distance_km": 20.5,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 173": {
+    "distance_km": 25.2,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 181": {
+    "distance_km": 27.8,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 182": {
+    "distance_km": 42.5,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 190": {
+    "distance_km": 46.2,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 192": {
+    "distance_km": 47.5,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 202": {
+    "distance_km": 43,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 207": {
+    "distance_km": 28,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 219": {
+    "distance_km": 66,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 220": {
+    "distance_km": 77.5,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 221": {
+    "distance_km": 57.8,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 222": {
+    "distance_km": 41.5,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 224": {
+    "distance_km": 92.3,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 225": {
+    "distance_km": 42,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 228": {
+    "distance_km": 15.8,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 234": {
+    "distance_km": 33.1,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 236": {
+    "distance_km": 16.2,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 240": {
+    "distance_km": 36,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 243": {
+    "distance_km": 31.7,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 245": {
+    "distance_km": 36.5,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 249": {
+    "distance_km": 52.5,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 252": {
+    "distance_km": 31.3,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 255": {
+    "distance_km": 25.9,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 256": {
+    "distance_km": 29.3,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 257": {
+    "distance_km": 40.9,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 259": {
+    "distance_km": 33.4,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 260": {
+    "distance_km": 42,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 264": {
+    "distance_km": 17.2,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 266": {
+    "distance_km": 55.3,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 270": {
+    "distance_km": 29.2,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 271": {
+    "distance_km": 36.7,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 273": {
+    "distance_km": 26.5,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 278": {
+    "distance_km": 21,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 280": {
+    "distance_km": 18.9,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 285": {
+    "distance_km": 21,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 288": {
+    "distance_km": 35,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 292": {
+    "distance_km": 40,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 294": {
+    "distance_km": 0,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 295": {
+    "distance_km": 53,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 299": {
+    "distance_km": 29,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 301": {
+    "distance_km": 29.5,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 302": {
+    "distance_km": 26.7,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 304": {
+    "distance_km": 32.2,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 307": {
+    "distance_km": 32.7,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 309": {
+    "distance_km": 41.7,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 310": {
+    "distance_km": 21.6,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 314": {
+    "distance_km": 38.8,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 317": {
+    "distance_km": 27.3,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 319": {
+    "distance_km": 30.7,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 320": {
+    "distance_km": 27,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 324": {
+    "distance_km": 23.4,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 327": {
+    "distance_km": 13.5,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 329": {
+    "distance_km": 20.8,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 330": {
+    "distance_km": 31.8,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 331": {
+    "distance_km": 58.6,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 333": {
+    "distance_km": 39.8,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 341": {
+    "distance_km": 48.7,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 344": {
+    "distance_km": 23.7,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 346": {
+    "distance_km": 25,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 354": {
+    "distance_km": 50.5,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 355": {
+    "distance_km": 17.5,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 356": {
+    "distance_km": 29.9,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 362": {
+    "distance_km": 38.5,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 365": {
+    "distance_km": 45.2,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 366": {
+    "distance_km": 32.4,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 367": {
+    "distance_km": 44.8,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 368": {
+    "distance_km": 46.3,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 377": {
+    "distance_km": 46.9,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 378": {
+    "distance_km": 23.5,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 380": {
+    "distance_km": 21.3,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 381": {
+    "distance_km": 20.6,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 384": {
+    "distance_km": 56.5,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 386": {
+    "distance_km": 78.6,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 387": {
+    "distance_km": 49.5,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 393": {
+    "distance_km": 37.4,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 406": {
+    "distance_km": 39.4,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 414": {
+    "distance_km": 32.1,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 421": {
+    "distance_km": 45.3,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 422": {
+    "distance_km": 52,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 426": {
+    "distance_km": 104.5,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 429": {
+    "distance_km": 0,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 430": {
+    "distance_km": 35.1,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 431": {
+    "distance_km": 53.8,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 432": {
+    "distance_km": 20,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 436": {
+    "distance_km": 39.8,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 439": {
+    "distance_km": 20,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 441": {
+    "distance_km": 65.4,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 453": {
+    "distance_km": 72.5,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 458": {
+    "distance_km": 15.3,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  },
+  "A 459": {
+    "distance_km": 15.3,
+    "rate_tk": 2.53,
+    "min_fare": 10
+  }
+}

@@ -38,7 +38,12 @@
         <section class="hero">
             <div class="hero-bg" style="background-image: url('brta_bus_hero.png');"></div>
             <div class="container">
-                <div class="search-card">
+                <!-- Mode Switcher -->
+                <div class="mode-switcher">
+                    <button class="mode-btn active" data-mode="intercity" data-lang-bn="আন্তঃজেলা রূট" data-lang-en="Inter District Route">Inter District Route</button>
+                    <button class="mode-btn" data-mode="local" data-lang-bn="লোকাল রূট" data-lang-en="Local Route">Local Route</button>
+                </div>
+                <div class="search-card" id="intercity-card">
                     <!-- Row 1: From + Swap + To -->
                     <div class="row g-2 align-items-end">
                         <div class="col-12 col-sm-5">
@@ -121,6 +126,108 @@
 
                     <div class="route-results" id="route-results"></div>
                 </div>
+
+                <!-- Local Bus Card -->
+                <div class="search-card local-bus-card" id="local-bus-card" style="display: none;">
+                    <div class="row g-2">
+                        <div class="col-12 col-sm-6">
+                            <div class="input-group">
+                                <label data-lang-bn="যাত্রা শুরুর স্থান" data-lang-en="From Stop">From Stop</label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-location-arrow icon-green"></i>
+                                    <select id="local-from-detail" class="local-bus-select">
+                                        <option value="" data-lang-bn="— নির্বাচন করুন —" data-lang-en="— Select —">— Select —</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="input-group">
+                                <label data-lang-bn="গন্তব্য স্থান" data-lang-en="To Stop">To Stop</label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-location-dot icon-red"></i>
+                                    <select id="local-to-detail" class="local-bus-select">
+                                        <option value="" data-lang-bn="— নির্বাচন করুন —" data-lang-en="— Select —">— Select —</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <div class="input-group">
+                                <label data-lang-bn="রুট নির্বাচন করুন" data-lang-en="Select Route">Select Route</label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-route icon-green"></i>
+                                    <select id="local-route-select" class="local-bus-select">
+                                        <option value="" data-lang-bn="— রুট নির্বাচন করুন —" data-lang-en="— Select Route —">— Select Route —</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <div class="input-group">
+                                <label data-lang-bn="বাস সার্ভিসের নাম" data-lang-en="Bus Service Name">Bus Service Name</label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-bus icon-green"></i>
+                                     <select id="bus-service-select" class="local-bus-select" disabled>
+                                         <option value="" data-lang-bn="— বাস নির্বাচন করুন —" data-lang-en="— Select Bus —">— Select Bus —</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <button class="btn-search w-100" id="btn-local-fare" data-lang-bn="ভাড়া দেখুন" data-lang-en="VIEW FARE">VIEW FARE</button>
+                        </div>
+                    </div>
+                    <div class="row g-2 info-row" id="local-fare-result" style="display: none;">
+                        <div class="col-12 col-sm-6">
+                            <div class="input-group">
+                                <label><i class="fa-solid fa-money-bill-wave icon-green"></i> <span data-lang-bn="ভাড়া" data-lang-en="Fare">Fare</span></label>
+                                <div class="input-wrapper fare-wrapper" style="background:#f0fdf4;border-color:var(--brta-green)">
+                                    <i class="fa-solid fa-money-bill-wave icon-green"></i>
+                                    <input type="text" id="local-fare-display" readonly style="color:var(--brta-green);font-weight:700">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="input-group">
+                                <label><i class="fa-solid fa-road"></i> <span data-lang-bn="দূরত্ব" data-lang-en="Distance">Distance</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-road icon-green"></i>
+                                    <input type="text" id="local-distance-display" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-2 info-row" id="local-route-info" style="display: none;">
+                        <div class="col-12 col-sm-6">
+                            <div class="input-group">
+                                <label><i class="fa-solid fa-route"></i> <span data-lang-bn="রুট নম্বর" data-lang-en="Route No">Route No</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-route icon-green"></i>
+                                    <input type="text" id="local-route-no-display" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="input-group">
+                                <label><i class="fa-solid fa-bus"></i> <span data-lang-bn="রুটের নাম" data-lang-en="Route Name">রুটের নাম</span></label>
+                                <div class="input-wrapper route-name-wrapper">
+                                    <i class="fa-solid fa-bus icon-green"></i>
+                                    <div id="local-route-name-display" class="route-name-display"></div>
+                                </div>
+                            </div>
+                        </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </section>
 
@@ -130,12 +237,12 @@
                     <div class="notice-icon">
                         <i class="fa-solid fa-circle-info"></i>
                     </div>
-                    <h2 data-lang-bn="বিআরটিএ নির্দেশিকা" data-lang-en="BRTA Instructions (General Notice)">বিআরটিএ নির্দেশিকা (General Notice)</h2>
+                    <h2 id="notice-title" data-lang-bn="বিআরটিএ নির্দেশিকা" data-lang-en="BRTA Instructions (General Notice)">বিআরটিএ নির্দেশিকা (General Notice)</h2>
                 </div>
 
-                <div class="notice-content">
-                    <p>
-                        <strong>বিঃদ্রঃ-</strong> সওজ হতে প্রাপ্ত দূরত্ব এবং প্রযোজ্য ক্ষেত্রে বিআইডব্লিউটিসি, বাংলাদেশ সেতু কর্তৃপক্ষ ও সওজ এর ব্রিজ, টোল ও ফেরী ভাড়ার তালিকা অনুসরণ করা হয়েছে। দূরত্ব/ভাড়ার পরিমাণ কম/বেশি হলে, যথাযথ প্রমাণ সাপেক্ষে বিআরটিএ কর্তৃক আনুপাতিক হারে ভাড়া নির্ধারণের ব্যবস্থা গ্রহণ করা হবে। এই ভাড়ার তালিকা বিআরটিএ'র ওয়েবসাইট <a href="https://brta.gov.bd" target="_blank">brta.gov.bd</a>-তে পাওয়া যাবে।
+                <div class="notice-content" id="notice-content">
+                    <p id="notice-body">
+                        <strong>বিঃদ্রঃ-</strong> সওজ হতে প্রাপ্ত দূরত্ব এবং প্রযোজ্য ক্ষেত্রে বিআইডব্লিউটিসি, বাংলাদেশ সেতু কর্তৃপক্ষ ও সওজ এর ব্রিজ, টোল ও ফেরী ভাড়ার তালিকা অনুসরণ করা হয়েছে। দূরত্ব/ভাড়ার পরিমাণ কম/বেশি হলে, যথাযথ প্রমাণ সাপেক্ষে বিআরটিএ কর্তৃক আনুপাতিক হারে ভাড়া নির্ধারণের ব্যবস্থা গ্রহণ করা হবে। এই ভাড়ার তালিকা বিআরটিএ'র ওয়েবসাইট <a href="https://brta.gov.bd" target="_blank">brta.gov.bd</a>-তে পাওয়া যাবে।
                     </p>
                 </div>
             </div>
@@ -173,6 +280,7 @@
         </div>
     </footer>
 
+    <script src="local_bus_data.js"></script>
     <script defer src="script.js"></script>
     <script>
         if ('serviceWorker' in navigator) {

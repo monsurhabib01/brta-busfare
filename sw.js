@@ -1,11 +1,15 @@
-const CACHE_NAME = 'brta-bus-fare-v4';
+const CACHE_NAME = 'brta-bus-fare-v8';
 
 const PRECACHE_URLS = [
     '/',
     './index.html',
     './style.css',
     './script.js',
+    './local_bus_data.js',
     './routes_data.json',
+    './local_routes_data.json',
+    './local_fare_matrix.json',
+    './local_routes_distance.json',
     './BRTA_Logo.png',
     './brta_bus_hero.png',
     './manifest.json',
@@ -40,6 +44,25 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
     if (event.request.method !== 'GET') return;
+
+    if (event.request.mode === 'navigate') {
+        event.respondWith(
+            caches.match(event.request).then(cached => {
+                const fetchPromise = fetch(event.request).then(response => {
+                    if (response && response.status === 200) {
+                        const clone = response.clone();
+                        caches.open(CACHE_NAME).then(cache => {
+                            cache.put(event.request, clone);
+                        });
+                    }
+                    return response;
+                }).catch(() => cached || caches.match('./index.html'));
+
+                return cached || fetchPromise;
+            })
+        );
+        return;
+    }
 
     event.respondWith(
         caches.match(event.request).then(cached => {

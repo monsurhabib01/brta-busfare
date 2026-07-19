@@ -1,14 +1,17 @@
 {
-    "name": "বাংলাদেশ সড়ক পরিবহন কর্তৃপক্ষ নির্ধারিত বাস ভাড়া - BRTA Bus Fare",
+    "name": "বাংলাদেশ সড়ক পরিবহন কর্তৃপক্ষ নির্ধারিত বাস ভাড়া - BRTA Bus Fare",
     "short_name": "BRTA Bus Fare",
     "description": "BRTA prescribed bus fare search and route information for Bangladesh",
-    "start_url": "/",
+    "id": "com.brtabusfare.app",
+    "start_url": "./index.html",
     "display": "standalone",
     "background_color": "#f4f7f6",
     "theme_color": "#006a4e",
     "orientation": "portrait-primary",
-    "lang": "bn",
+    "lang": "en-US",
     "dir": "ltr",
+    "prefer_related_applications": false,
+    "categories": ["travel", "utilities", "productivity"],
     "icons": [
         {
             "src": "favicon_io/android-chrome-192x192.png",
@@ -21,6 +24,35 @@
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "favicon_io/Screenshot/desktop-screenshot_1.png",
+            "sizes": "1920x1080",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "BRTA Bus Fare Desktop View"
+        },
+        {
+            "src": "favicon_io/Screenshot/mobile-screenshot_1.png",
+            "sizes": "1080x1920",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "BRTA Bus Fare Mobile View"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Search Routes & Fares",
+            "short_name": "Search",
+            "url": "/?utm_source=shortcut",
+            "icons": [
+                {
+                    "src": "favicon_io/Screenshot/screenshot-logo.png",
+                    "sizes": "192x192"
+                }
+            ]
         }
     ]
 }

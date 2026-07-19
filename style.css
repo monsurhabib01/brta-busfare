@@ -28,7 +28,12 @@
 body {
     font-family: 'Kalpurush', 'Inter', sans-serif;
     color: var(--text-dark);
-    background-color: var(--bg-light);
+    background-image: url('my-brta-bg.png') !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+    background-color: #ffffff;
     line-height: 1.8;
     overflow-x: hidden;
 }
@@ -792,4 +797,112 @@ header nav {
     font-size: 12px;
     color: #888;
     line-height: 1.6;
+}
+
+/* Mode Switcher Tabs */
+.mode-switcher {
+    display: flex;
+    gap: 0;
+    margin-bottom: 20px;
+    background: var(--light-green);
+    border-radius: 14px;
+    padding: 4px;
+    border: 1.5px solid var(--brta-green);
+    overflow: hidden;
+}
+
+.mode-btn {
+    flex: 1;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    background: transparent;
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.mode-btn.active {
+    background: var(--brta-green);
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(0,106,78,0.3);
+}
+
+.mode-btn:hover:not(.active) {
+    background: rgba(0,106,78,0.08);
+}
+
+/* Local Bus Select Inputs */
+.local-bus-select {
+    border: none;
+    outline: none;
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 600;
+    background: transparent;
+    font-family: 'Kalpurush', 'Inter', sans-serif;
+    color: var(--text-dark);
+    cursor: pointer;
+    padding: 2px 0;
+    appearance: auto;
+    -webkit-appearance: auto;
+}
+
+.local-bus-select option {
+    font-family: 'Kalpurush', 'Inter', sans-serif;
+    font-size: 15px;
+    padding: 4px;
+}
+
+.local-bus-card {
+    margin-top: 0;
+}
+
+.local-bus-card .btn-search {
+    margin-top: 4px;
+}
+
+#local-fare-display {
+    font-size: 22px;
+}
+
+/* Route Name Display */
+.route-name-wrapper {
+    height: auto !important;
+    min-height: 50px;
+    align-items: flex-start;
+    padding-top: 14px;
+}
+
+.route-name-display {
+    flex: 1;
+    min-width: 0;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    color: #1e293b;
+}
+
+@media (max-width: 575px) {
+    .mode-btn {
+        font-size: 13px;
+        padding: 10px 16px;
+    }
+    .mode-switcher {
+        margin-bottom: 14px;
+    }
+    .local-bus-select {
+        font-size: 14px;
+    }
+    .route-name-wrapper { min-height: 40px; padding-top: 12px; }
+    .route-name-display { font-size: 14px; }
 }
