@@ -31,7 +31,7 @@ body {
     background-image: url('my-brta-bg.png') !important;
     background-position: center center !important;
     background-repeat: no-repeat !important;
-    background-size: cover !important;
+    background-size: contain !important;
     background-attachment: fixed !important;
     background-color: #ffffff;
     line-height: 1.8;
@@ -204,8 +204,9 @@ header nav {
     left: 0;
     width: 100%;
     height: 100%;
-    background-size: cover;
-    background-position: center;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
     z-index: -1;
     filter: brightness(0.95);
 }
@@ -892,17 +893,126 @@ header nav {
     color: #1e293b;
 }
 
+/* Local Route Dropdown (autocomplete) */
+.local-route-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    min-width: 250px;
+    max-height: 280px;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(12px);
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    z-index: 10000;
+    margin-top: 6px;
+    font-family: 'Kalpurush', 'Inter', sans-serif;
+    animation: fadeInSuggestions 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.local-route-dropdown.active {
+    display: block;
+}
+
+.local-route-dropdown .route-dropdown-item {
+    padding: 12px 18px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+    border-bottom: 1.5px solid #f8fafc;
+    transition: all 0.2s ease;
+}
+
+.local-route-dropdown .route-dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.local-route-dropdown .route-dropdown-item:hover,
+.local-route-dropdown .route-dropdown-item.active {
+    background-color: var(--light-green);
+    color: var(--brta-green);
+    padding-left: 22px;
+}
+
+.local-route-dropdown .route-dropdown-item .route-item-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+    display: block;
+    margin-top: 2px;
+}
+
+.local-route-dropdown .route-no-match {
+    padding: 14px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ef4444;
+    text-align: center;
+}
+
+.local-route-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+.local-route-dropdown::-webkit-scrollbar-track {
+    background: transparent;
+}
+.local-route-dropdown::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+.local-route-dropdown::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
 @media (max-width: 575px) {
-    .mode-btn {
+    .local-route-dropdown {
+        max-height: 180px;
+        min-width: 200px;
+    }
+    .local-route-dropdown .route-dropdown-item {
+        padding: 10px 14px;
         font-size: 13px;
-        padding: 10px 16px;
     }
-    .mode-switcher {
-        margin-bottom: 14px;
-    }
+}
+
+/* Bus Service List (static text, no dropdown) */
+.bus-service-wrapper {
+    min-height: 48px;
+    align-items: flex-start;
+    padding-top: 10px;
+}
+
+.bus-service-list {
+    flex: 1;
+    min-width: 0;
+    font-family: 'Kalpurush', 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+.bus-service-list .bus-service-empty {
+    color: var(--text-muted);
+    font-weight: 500;
+    font-style: italic;
+}
+
+.bus-service-list .bus-service-item {
+    display: block;
+    padding: 2px 0;
+}
+
+@media (max-width: 575px) {
     .local-bus-select {
         font-size: 14px;
     }
     .route-name-wrapper { min-height: 40px; padding-top: 12px; }
     .route-name-display { font-size: 14px; }
+    .bus-service-list { font-size: 13px; }
 }

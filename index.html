@@ -132,23 +132,21 @@
                     <div class="row g-2">
                         <div class="col-12 col-sm-6">
                             <div class="input-group">
-                                <label data-lang-bn="যাত্রা শুরুর স্থান" data-lang-en="From Stop">From Stop</label>
+                                <label data-lang-bn="যাত্রা শুরুর স্থান" data-lang-en="Starting Point">Starting Point</label>
                                 <div class="input-wrapper">
                                     <i class="fa-solid fa-location-arrow icon-green"></i>
-                                    <select id="local-from-detail" class="local-bus-select">
-                                        <option value="" data-lang-bn="— নির্বাচন করুন —" data-lang-en="— Select —">— Select —</option>
-                                    </select>
+                                    <input type="text" id="local-from-input" class="local-bus-select" placeholder="Starting Point" autocomplete="off">
+                                    <div id="local-from-dropdown" class="local-route-dropdown"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="input-group">
-                                <label data-lang-bn="গন্তব্য স্থান" data-lang-en="To Stop">To Stop</label>
+                                <label data-lang-bn="গন্তব্য স্থান" data-lang-en="Destination">Destination</label>
                                 <div class="input-wrapper">
                                     <i class="fa-solid fa-location-dot icon-red"></i>
-                                    <select id="local-to-detail" class="local-bus-select">
-                                        <option value="" data-lang-bn="— নির্বাচন করুন —" data-lang-en="— Select —">— Select —</option>
-                                    </select>
+                                    <input type="text" id="local-to-input" class="local-bus-select" placeholder="Destination" autocomplete="off">
+                                    <div id="local-to-dropdown" class="local-route-dropdown"></div>
                                 </div>
                             </div>
                         </div>
@@ -159,9 +157,8 @@
                                 <label data-lang-bn="রুট নির্বাচন করুন" data-lang-en="Select Route">Select Route</label>
                                 <div class="input-wrapper">
                                     <i class="fa-solid fa-route icon-green"></i>
-                                    <select id="local-route-select" class="local-bus-select">
-                                        <option value="" data-lang-bn="— রুট নির্বাচন করুন —" data-lang-en="— Select Route —">— Select Route —</option>
-                                    </select>
+                                    <input type="text" id="local-route-input" class="local-bus-select" placeholder="— রুট নির্বাচন করুন —" autocomplete="off">
+                                    <div id="local-route-dropdown" class="local-route-dropdown"></div>
                                 </div>
                             </div>
                         </div>
@@ -170,11 +167,11 @@
                         <div class="col-12">
                             <div class="input-group">
                                 <label data-lang-bn="বাস সার্ভিসের নাম" data-lang-en="Bus Service Name">Bus Service Name</label>
-                                <div class="input-wrapper">
+                                <div class="input-wrapper bus-service-wrapper">
                                     <i class="fa-solid fa-bus icon-green"></i>
-                                     <select id="bus-service-select" class="local-bus-select" disabled>
-                                         <option value="" data-lang-bn="— বাস নির্বাচন করুন —" data-lang-en="— Select Bus —">— Select Bus —</option>
-                                    </select>
+                                    <div id="bus-service-list" class="bus-service-list">
+                                        <span class="bus-service-empty" data-lang-bn="— কোনো বাস সার্ভিস নেই —" data-lang-en="— No Bus Service —">— No Bus Service —</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -281,6 +278,7 @@
     </footer>
 
     <script src="local_bus_data.js"></script>
+    <script src="local_stop_en.js"></script>
     <script defer src="script.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
