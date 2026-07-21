@@ -5957,6 +5957,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (typeof updateNoticeSection === 'function') updateNoticeSection();
+        if (localFromDropdown.classList.contains('active') && _fromStopsList.length) {
+            showStopDropdown(localFromInput, localFromDropdown, _fromStopsList, _selectedFromStop, handleFromStopSelected);
+        }
+        if (localToDropdown.classList.contains('active') && _toStopsList.length) {
+            showStopDropdown(localToInput, localToDropdown, _toStopsList, _selectedToStop, handleToStopSelected);
+        }
         closeAllSuggestions();
     }
 
@@ -6210,16 +6216,9 @@ document.addEventListener('DOMContentLoaded', () => {
             filtered = allLocationsList.filter(item => {
                 if (!cleaned) return true;
                 const en = getLocationEn(item);
-                if (currentLang === 'en') {
-                    return en && en !== item && en.toLowerCase().includes(cleaned);
-                }
                 if (item.toLowerCase().includes(cleaned)) return true;
-                return en && en.toLowerCase().includes(cleaned);
-            });
-        } else if (currentLang === 'en') {
-            filtered = allLocationsList.filter(item => {
-                const en = getLocationEn(item);
-                return en && en !== item;
+                if (en && en.toLowerCase().includes(cleaned)) return true;
+                return false;
             });
         }
         renderSuggestions(fromSuggestions, filtered, fromInput, true);
@@ -6241,30 +6240,17 @@ document.addEventListener('DOMContentLoaded', () => {
             if (cleaned) {
                 forwardRoutes = forwardRoutes.filter(r => {
                     const en = getLocationEn(r.to);
-                    if (currentLang === 'en') {
-                        return en && en !== r.to && en.toLowerCase().includes(cleaned);
-                    }
                     const display = getLocationDisplay(r.to);
                     if (display.toLowerCase().includes(cleaned)) return true;
-                    return en && en.toLowerCase().includes(cleaned);
+                    if (en && en.toLowerCase().includes(cleaned)) return true;
+                    return false;
                 });
                 reverseRoutes = reverseRoutes.filter(r => {
                     const en = getLocationEn(r.from);
-                    if (currentLang === 'en') {
-                        return en && en !== r.from && en.toLowerCase().includes(cleaned);
-                    }
                     const display = getLocationDisplay(r.from);
                     if (display.toLowerCase().includes(cleaned)) return true;
-                    return en && en.toLowerCase().includes(cleaned);
-                });
-            } else if (currentLang === 'en') {
-                forwardRoutes = forwardRoutes.filter(r => {
-                    const en = getLocationEn(r.to);
-                    return en && en !== r.to;
-                });
-                reverseRoutes = reverseRoutes.filter(r => {
-                    const en = getLocationEn(r.from);
-                    return en && en !== r.from;
+                    if (en && en.toLowerCase().includes(cleaned)) return true;
+                    return false;
                 });
             }
 
@@ -6274,16 +6260,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (cleaned) {
                 filtered = uniqueToList.filter(item => {
                     const en = getLocationEn(item);
-                    if (currentLang === 'en') {
-                        return en && en !== item && en.toLowerCase().includes(cleaned);
-                    }
                     if (item.toLowerCase().includes(cleaned)) return true;
-                    return en && en.toLowerCase().includes(cleaned);
-                });
-            } else if (currentLang === 'en') {
-                filtered = uniqueToList.filter(item => {
-                    const en = getLocationEn(item);
-                    return en && en !== item;
+                    if (en && en.toLowerCase().includes(cleaned)) return true;
+                    return false;
                 });
             }
             renderSuggestions(toSuggestions, filtered, toInput, false);
@@ -6689,7 +6668,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function getAllLocalStops() {
         if (_allLocalStopsCache) return _allLocalStopsCache;
         const seen = new Map();
-        const enSeen = new Set();
         const enMap = {};
         LOCAL_ROUTES_DATA.forEach(r => {
             const stopsBn = r.stops_bn && r.stops_bn.length ? r.stops_bn : [r.origin_bn, r.destination_bn];
@@ -6705,8 +6683,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         enName = LOCAL_STOP_EN[name] || LOCAL_STOP_EN[key] || '';
                     }
                     if (enName === 'Original Dash') enName = 'Original-10';
-                    if (enName && enSeen.has(enName)) return;
-                    if (enName) enSeen.add(enName);
                     seen.set(key, name);
                     enMap[key] = enName;
                 }
@@ -6917,7 +6893,9 @@ document.addEventListener('DOMContentLoaded', () => {
             localRouteDropdown.innerHTML = '';
             localRouteNoDisplay.value = route.route_no || '';
             const stopsBn = route.stops_bn && route.stops_bn.length ? route.stops_bn : [];
-            const stopsEn = route.stops_en && route.stops_en.length ? route.stops_en : [];
+            const stopsEn = route.stops_en && route.stops_en.length
+                ? route.stops_en
+                : stopsBn.map(s => getLocalStopEn(s) || s);
             if (stopsBn.length) {
                 localRouteNameDisplay.textContent = currentLang === 'bn'
                     ? stopsBn.join(', ') + '।'
@@ -7032,7 +7010,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const routeNo = (route.route_no || '').normalize('NFC').toLowerCase();
             if (routeNameBn.includes(q) || routeNameEn.includes(q) || routeNo.includes(q)) return true;
             const stopsBn = route.stops_bn || [];
-            const stopsEn = route.stops_en || [];
+            const stopsEn = route.stops_en && route.stops_en.length
+                ? route.stops_en
+                : stopsBn.map(s => getLocalStopEn(s) || s);
             for (let i = 0; i < stopsBn.length; i++) {
                 if (stopsBn[i] && stopsBn[i].normalize('NFC').toLowerCase().includes(q)) return true;
             }
@@ -7105,7 +7085,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     localRouteInfo.style.display = '';
                     localRouteNoDisplay.value = activeRoute.route_no || '';
                     const stopsBnRestore = activeRoute.stops_bn && activeRoute.stops_bn.length ? activeRoute.stops_bn : [];
-                    const stopsEnRestore = activeRoute.stops_en && activeRoute.stops_en.length ? activeRoute.stops_en : [];
+                    const stopsEnRestore = activeRoute.stops_en && activeRoute.stops_en.length
+                        ? activeRoute.stops_en
+                        : stopsBnRestore.map(s => getLocalStopEn(s) || s);
                     if (stopsBnRestore.length) {
                         localRouteNameDisplay.textContent = currentLang === 'bn'
                             ? stopsBnRestore.join(', ') + '।'

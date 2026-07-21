@@ -196,6 +196,7 @@ header nav {
     min-height: 500px;
     display: flex;
     align-items: center;
+    overflow: hidden;
 }
 
 .hero-bg {
@@ -488,9 +489,13 @@ header nav {
 
 /* Responsive */
 @media (max-width: 575px) {
-    .hero { padding: 40px 0 100px; min-height: auto; }
+    .hero { padding: 30px 0 60px; min-height: auto; }
+    .hero-bg { background-size: cover; opacity: 0.12; }
+    .mode-switcher { margin-bottom: 14px; }
+    .mode-btn { padding: 10px 12px; font-size: 13px; }
     .search-card { padding: 16px; overflow: visible; }
-    .swap-icon { height: 36px; font-size: 16px; }
+    .search-card .row + .row { margin-top: 12px; }
+    .swap-icon { height: 32px; font-size: 14px; margin: -4px 0; }
     .dual-fare-group { grid-template-columns: 1fr; gap: 8px; }
     .btn-search { height: 46px; margin-top: 0; min-width: 0; font-size: 14px; }
     .input-wrapper { padding: 8px 10px; gap: 6px; }
