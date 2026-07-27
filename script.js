@@ -6872,11 +6872,44 @@ document.addEventListener('DOMContentLoaded', () => {
         return stops.findIndex(s => s && s.normalize('NFC').trim() === norm);
     }
 
+    function computeDownstreamStops(fromStop) {
+        if (!fromStop) return getAllLocalStops();
+        const fromNorm = fromStop.normalize('NFC').trim();
+        if (currentLocalRoute && currentLocalRoute.stops_bn && currentLocalRoute.stops_bn.length >= 2) {
+            const stops = currentLocalRoute.stops_bn;
+            const isOnRoute = stops.some(s => s && s.normalize('NFC').trim() === fromNorm);
+            if (isOnRoute) return stops.filter(s => s && s.normalize('NFC').trim() !== fromNorm);
+        }
+        const seen = new Set();
+        const result = [];
+        LOCAL_ROUTES_DATA.forEach(route => {
+            const stops = route.stops_bn;
+            if (!stops || stops.length < 2) return;
+            const isOnRoute = stops.some(s => s && s.normalize('NFC').trim() === fromNorm);
+            if (!isOnRoute) return;
+            stops.forEach(s => {
+                if (!s) return;
+                const key = s.normalize('NFC').trim();
+                if (key !== fromNorm && !seen.has(key)) {
+                    seen.add(key);
+                    result.push(s);
+                }
+            });
+        });
+        if (result.length > 0) return result;
+        return getAllLocalStops().filter(s => s && s.normalize('NFC').trim() !== fromNorm);
+    }
+
     function clearLocalResults() {
         localFareResult.style.display = 'none';
         localRouteInfo.style.display = 'none';
-        currentLocalRoute = null;
         populateBusServiceList(null);
+    }
+
+    function clearRouteAndResults() {
+        clearLocalResults();
+        currentLocalRoute = null;
+        selectedRouteNo = '';
     }
 
     function cleanStopName(name) {
@@ -6911,12 +6944,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function populateBusServiceList(routeNo) {
         busServiceList.innerHTML = '';
         if (!routeNo || typeof LOCAL_BUS_SERVICES === 'undefined') {
-            const span = document.createElement('span');
-            span.className = 'bus-service-empty';
-            span.setAttribute('data-lang-bn', '— কোনো বাস সার্ভিস নেই —');
-            span.setAttribute('data-lang-en', '— No Bus Service —');
-            span.textContent = currentLang === 'bn' ? '— কোনো বাস সার্ভিস নেই —' : '— No Bus Service —';
-            busServiceList.appendChild(span);
             return;
         }
         const svc = LOCAL_BUS_SERVICES[routeNo];
@@ -6946,13 +6973,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function updateToStops(allStops, fromStop) {
-        _toStopsList = allStops.filter(s => s && s !== fromStop);
-        _selectedToStop = '';
-        localToInput.value = '';
-        localToDropdown.innerHTML = '';
-        localToDropdown.classList.remove('active');
-    }
 
     function populateRouteStopSelects(route, preserveSelections) {
         try {
@@ -6964,7 +6984,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const prevTo = _selectedToStop;
 
             _fromStopsList = stopsBn.filter(s => s);
-            _toStopsList = stopsBn.filter(s => s);
 
             localFromDropdown.innerHTML = '';
             localToDropdown.innerHTML = '';
@@ -6992,6 +7011,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 _selectedToStop = '';
                 localFromInput.value = '';
                 localToInput.value = '';
+            }
+
+            if (_selectedFromStop) {
+                const fromNorm = _selectedFromStop.normalize('NFC').trim();
+                _toStopsList = stopsBn.filter(s => s && s.normalize('NFC').trim() !== fromNorm);
+            } else {
+                _toStopsList = stopsBn.filter(s => s);
             }
         } catch (e) { console.error('populateRouteStopSelects error:', e); }
     }
@@ -7044,7 +7070,7 @@ document.addEventListener('DOMContentLoaded', () => {
             div.addEventListener('mousedown', (e) => {
                 e.preventDefault();
                 selectLocalRoute(route);
-                populateRouteStopSelects(route, false);
+                populateRouteStopSelects(route, !!(_selectedFromStop && _selectedToStop));
             });
             localRouteDropdown.appendChild(div);
         });
@@ -7063,40 +7089,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const stops = route.stops_bn && route.stops_bn.length >= 2
                 ? route.stops_bn
                 : [route.origin_bn].concat(route.destination_bn && route.destination_bn !== route.origin_bn ? [route.destination_bn] : []);
-            const hasFrom = stops.some(s => s && s.normalize('NFC').trim() === fromNorm);
-            const hasTo = stops.some(s => s && s.normalize('NFC').trim() === toNorm);
-            return hasFrom && hasTo;
+            const fromIdx = stops.findIndex(s => s && s.normalize('NFC').trim() === fromNorm);
+            const toIdx = stops.findIndex(s => s && s.normalize('NFC').trim() === toNorm);
+            return fromIdx >= 0 && toIdx >= 0;
         });
     }
 
     function handleFromStopSelected(stopVal) {
         try {
             _selectedFromStop = stopVal;
-            const fromVal = stopVal;
-            const activeRoute = currentLocalRoute;
+            _selectedToStop = '';
+            localToInput.value = '';
             clearLocalResults();
 
-            if (!fromVal) {
-                _selectedToStop = '';
-                localToInput.value = '';
-                if (activeRoute) {
-                    currentLocalRoute = activeRoute;
-                    selectedRouteNo = activeRoute.route_no || '';
+            if (!stopVal) {
+                _fromStopsList = getAllLocalStops();
+                _toStopsList = [..._fromStopsList];
+                if (currentLocalRoute) {
                     localRouteInfo.style.display = '';
-                    localRouteNoDisplay.value = activeRoute.route_no || '';
-                    const stopsBnRestore = activeRoute.stops_bn && activeRoute.stops_bn.length ? activeRoute.stops_bn : [];
-                    const stopsEnRestore = activeRoute.stops_en && activeRoute.stops_en.length
-                        ? activeRoute.stops_en
-                        : stopsBnRestore.map(s => getLocalStopEn(s) || s);
-                    if (stopsBnRestore.length) {
-                        localRouteNameDisplay.textContent = currentLang === 'bn'
-                            ? stopsBnRestore.join(', ') + '।'
-                            : stopsEnRestore.join(', ') + '.';
-                    } else {
-                        localRouteNameDisplay.textContent = currentLang === 'bn' ? activeRoute.route_name_bn : (activeRoute.route_name_en || '');
-                    }
-                    populateBusServiceList(activeRoute.route_no);
-                    populateRouteStopSelects(activeRoute, false);
+                    populateBusServiceList(currentLocalRoute.route_no);
+                    populateRouteStopSelects(currentLocalRoute, false);
                 } else {
                     populateStopSelects();
                     populateAllRoutes();
@@ -7104,31 +7116,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            if (activeRoute) {
-                updateToStops(activeRoute.stops_bn || [], fromVal);
-            } else {
-                updateToStops(getAllLocalStops(), fromVal);
-            }
-
-            const toVal = _selectedToStop;
-            if (toVal) {
-                const filtered = filterRoutesByStops(fromVal, toVal);
-                populateFilteredRoutes(filtered);
-                if (filtered.length === 1) {
-                    selectedRouteNo = filtered[0].route_no;
-                    localRouteInput.value = filtered[0].route_no + ' - ' + (currentLang === 'bn' ? (filtered[0].route_name_bn || '') : (filtered[0].route_name_en || ''));
-                    selectLocalRoute(filtered[0]);
+            if (currentLocalRoute) {
+                const stops = currentLocalRoute.stops_bn || [];
+                const fromNorm = stopVal.normalize('NFC').trim();
+                const isOnRoute = stops.some(s => s && s.normalize('NFC').trim() === fromNorm);
+                if (isOnRoute) {
+                    _toStopsList = stops.filter(s => s && s.normalize('NFC').trim() !== fromNorm);
+                    localRouteInfo.style.display = '';
+                    populateBusServiceList(currentLocalRoute.route_no);
                 } else {
-                    currentLocalRoute = null;
-                    localRouteInfo.style.display = 'none';
+                    clearRouteAndResults();
+                    _toStopsList = computeDownstreamStops(stopVal);
                 }
+            } else {
+                _toStopsList = computeDownstreamStops(stopVal);
             }
         } catch(e) { console.error('From Stop select error:', e); }
     }
 
     function handleToStopSelected(stopVal) {
         try {
-            _selectedToStop = stopVal;
             const fromVal = _selectedFromStop;
             const toVal = stopVal;
             clearLocalResults();
@@ -7136,11 +7143,25 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!toVal || !fromVal) return;
 
             const filtered = filterRoutesByStops(fromVal, toVal);
-            populateFilteredRoutes(filtered);
+
             if (filtered.length === 1) {
+                _selectedToStop = stopVal;
                 selectedRouteNo = filtered[0].route_no;
                 localRouteInput.value = filtered[0].route_no + ' - ' + (currentLang === 'bn' ? (filtered[0].route_name_bn || '') : (filtered[0].route_name_en || ''));
                 selectLocalRoute(filtered[0]);
+                populateRouteStopSelects(filtered[0], true);
+            } else if (filtered.length > 1) {
+                _selectedToStop = stopVal;
+                populateFilteredRoutes(filtered);
+                currentLocalRoute = null;
+                selectedRouteNo = '';
+                localRouteInput.value = '';
+            } else {
+                _selectedToStop = '';
+                localToInput.value = '';
+                alert(currentLang === 'en'
+                    ? 'No route found connecting these two stops.'
+                    : 'এই দুই স্টপের মধ্যে কোনো রুট পাওয়া যায়নি।');
             }
         } catch(e) { console.error('To Stop select error:', e); }
     }
@@ -7177,6 +7198,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     localRouteInput.addEventListener('focus', () => {
         try {
+            if (_selectedFromStop && _selectedToStop) {
+                const filtered = filterRoutesByStops(_selectedFromStop, _selectedToStop);
+                showRouteDropdown(filtered);
+                return;
+            }
             const query = localRouteInput.value.trim();
             if (query) {
                 const filtered = filterRoutesByText(query);
@@ -7262,23 +7288,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 localFromInput.value = currentLang === 'en' ? (getLocalStopEn(data.from) || data.from) : data.from;
                 if (data.route) {
                     const route = LOCAL_ROUTES_DATA.find(r => r.route_no === data.route);
-                    if (route) updateToStops(route.stops_bn || [], data.from);
+                    if (route) {
+                        const stops = (route.stops_bn || []).filter(s => s);
+                        const fromNorm = data.from.normalize('NFC').trim();
+                        _toStopsList = stops.filter(s => s && s.normalize('NFC').trim() !== fromNorm);
+                    }
                 } else {
-                    updateToStops(getAllLocalStops(), data.from);
+                    _toStopsList = computeDownstreamStops(data.from);
                 }
                 if (data.to) {
-                    _selectedToStop = data.to;
-                    localToInput.value = currentLang === 'en' ? (getLocalStopEn(data.to) || data.to) : data.to;
-                    if (data.from && data.to) {
-                        const filtered = filterRoutesByStops(data.from, data.to);
-                        if (filtered.length > 0) populateFilteredRoutes(filtered);
-                        if (data.route) {
-                            selectedRouteNo = data.route;
-                            const route = LOCAL_ROUTES_DATA.find(r => r.route_no === data.route);
-                            if (route) {
-                                localRouteInput.value = route.route_no + ' - ' + (currentLang === 'bn' ? (route.route_name_bn || '') : (route.route_name_en || ''));
+                    const toInList = _toStopsList.some(s => s && s.normalize('NFC').trim() === data.to.normalize('NFC').trim());
+                    if (toInList) {
+                        _selectedToStop = data.to;
+                        localToInput.value = currentLang === 'en' ? (getLocalStopEn(data.to) || data.to) : data.to;
+                        if (data.from && data.to) {
+                            const filtered = filterRoutesByStops(data.from, data.to);
+                            if (filtered.length > 0) populateFilteredRoutes(filtered);
+                            if (data.route) {
+                                selectedRouteNo = data.route;
+                                const route = LOCAL_ROUTES_DATA.find(r => r.route_no === data.route);
+                                if (route) {
+                                    localRouteInput.value = route.route_no + ' - ' + (currentLang === 'bn' ? (route.route_name_bn || '') : (route.route_name_en || ''));
+                                }
                             }
                         }
+                    } else {
+                        _selectedToStop = '';
+                        localToInput.value = '';
                     }
                 }
             }
