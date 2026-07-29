@@ -28,11 +28,7 @@
 body {
     font-family: 'Kalpurush', 'Inter', sans-serif;
     color: var(--text-dark);
-    background-image: url('my-brta-bg.png') !important;
-    background-position: center center !important;
-    background-repeat: no-repeat !important;
-    background-size: contain !important;
-    background-attachment: fixed !important;
+
     background-color: #ffffff;
     line-height: 1.8;
     overflow-x: hidden;

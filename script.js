@@ -6586,7 +6586,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('route-no-display').value = '';
             const rc = document.getElementById('route-results');
             if (rc) { rc.innerHTML = ''; rc.classList.remove('active'); }
-        } catch(e) { console.error('clearIntercityInputs error:', e); }
+        } catch(e) { /* clearIntercityInputs error */ }
     }
 
     function clearLocalInputs() {
@@ -6614,7 +6614,7 @@ document.addEventListener('DOMContentLoaded', () => {
             invalidateStopsCache();
             populateStopSelects();
             populateAllRoutes();
-        } catch(e) { console.error('clearLocalInputs error:', e); }
+        } catch(e) { /* clearLocalInputs error */ }
     }
 
     function saveActiveTab(mode) {
@@ -6638,7 +6638,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 clearLocalInputs();
                 closeAllSuggestions();
                 updateNoticeSection();
-            } catch(e) { console.error('Tab switch error:', e); }
+            } catch(e) { /* tab switch error */ }
         });
     });
 
@@ -6864,7 +6864,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 localRouteNameDisplay.textContent = currentLang === 'bn' ? route.route_name_bn : (route.route_name_en || '');
             }
             localRouteInfo.style.display = '';
-        } catch(e) { console.error('calculateLocalFare error:', e); }
+        } catch(e) { /* calculateLocalFare error */ }
     }
 
     function findStopIndex(stops, stopName) {
@@ -6938,7 +6938,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             localRouteInfo.style.display = '';
             populateBusServiceList(route.route_no);
-        } catch (e) { console.error('selectLocalRoute error:', e); }
+        } catch (e) { /* selectLocalRoute error */ }
     }
 
     function populateBusServiceList(routeNo) {
@@ -7019,7 +7019,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 _toStopsList = stopsBn.filter(s => s);
             }
-        } catch (e) { console.error('populateRouteStopSelects error:', e); }
+        } catch (e) { /* populateRouteStopSelects error */ }
     }
 
     function populateAllRoutes() {
@@ -7131,7 +7131,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 _toStopsList = computeDownstreamStops(stopVal);
             }
-        } catch(e) { console.error('From Stop select error:', e); }
+        } catch(e) { /* from stop select error */ }
     }
 
     function handleToStopSelected(stopVal) {
@@ -7163,7 +7163,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ? 'No route found connecting these two stops.'
                     : 'এই দুই স্টপের মধ্যে কোনো রুট পাওয়া যায়নি।');
             }
-        } catch(e) { console.error('To Stop select error:', e); }
+        } catch(e) { /* to stop select error */ }
     }
 
     attachStopAutocomplete(localFromInput, localFromDropdown, () => _fromStopsList, handleFromStopSelected);
@@ -7193,7 +7193,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const filtered = filterRoutesByText(query);
             showRouteDropdown(filtered);
-        } catch(e) { console.error('Route input filter error:', e); }
+        } catch(e) { /* route input filter error */ }
     });
 
     localRouteInput.addEventListener('focus', () => {
@@ -7256,7 +7256,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             calculateLocalFare(route);
-        } catch(e) { console.error('Local fare button error:', e); }
+        } catch(e) { /* local fare button error */ }
     });
 
     function saveLocalSelections() {
@@ -7328,18 +7328,10 @@ document.addEventListener('DOMContentLoaded', () => {
             fetch('./local_routes_data.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
             fetch('./local_fare_matrix.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
             fetch('./local_routes_distance.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
-            fetch('./cleaned_routes_output.json').then(r => r.json()).catch(() => [])
-        ]).then(([routes, fareMatrix, distData, cleanedRoutes]) => {
+        ]).then(([routes, fareMatrix, distData]) => {
             if (routes.length > 0) LOCAL_ROUTES_DATA = routes;
             if (Object.keys(fareMatrix).length > 0) LOCAL_FARE_MATRIX = fareMatrix;
             if (Object.keys(distData).length > 0) LOCAL_ROUTES_DISTANCE = distData;
-            cleanedRoutes.forEach(cr => {
-                const routeNo = 'A ' + cr.route_number;
-                const route = LOCAL_ROUTES_DATA.find(r => r.route_no === routeNo);
-                if (route && cr.route_name_en && !route.route_name_en) {
-                    route.route_name_en = cr.route_name_en;
-                }
-            });
             invalidateStopsCache();
             populateStopSelects();
             populateAllRoutes();
