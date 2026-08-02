@@ -981,32 +981,10 @@ header nav {
     }
 }
 
-/* Bus Service List (static text, no dropdown) */
+/* Bus Service Name Dropdown */
 .bus-service-wrapper {
-    min-height: 48px;
-    align-items: flex-start;
-    padding-top: 10px;
-}
-
-.bus-service-list {
-    flex: 1;
-    min-width: 0;
-    font-family: 'Kalpurush', 'Inter', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-dark);
-    line-height: 1.6;
-}
-
-.bus-service-list .bus-service-empty {
-    color: var(--text-muted);
-    font-weight: 500;
-    font-style: italic;
-}
-
-.bus-service-list .bus-service-item {
-    display: block;
-    padding: 2px 0;
+    align-items: center;
+    padding: 12px 18px;
 }
 
 @media (max-width: 575px) {
@@ -1015,5 +993,4 @@ header nav {
     }
     .route-name-wrapper { min-height: 40px; padding-top: 12px; }
     .route-name-display { font-size: 14px; }
-    .bus-service-list { font-size: 13px; }
 }
