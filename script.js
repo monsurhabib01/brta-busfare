@@ -5911,7 +5911,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('[data-placeholder-bn]').forEach(el => {
             el.placeholder = el.getAttribute('data-placeholder-' + lang);
         });
-        localRouteInput.placeholder = lang === 'bn' ? '— রুট নির্বাচন করুন —' : '— Select Route —';
+        localRouteInput.placeholder = lang === 'bn' ? 'রুট' : 'Route';
         localFromInput.placeholder = lang === 'bn' ? 'যাত্রা শুরুর স্থান' : 'Starting Point';
         localToInput.placeholder = lang === 'bn' ? 'গন্তব্য স্থান' : 'Destination';
         busServiceInput.placeholder = lang === 'bn' ? '— বাস সার্ভিস নির্বাচন করুন —' : '— Select Bus Service —';
