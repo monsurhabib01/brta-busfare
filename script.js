@@ -5927,6 +5927,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (selectedBusService) {
             const svc = getAllBusServices().find(s => s.bn === selectedBusService);
             busServiceInput.value = svc ? (lang === 'bn' ? svc.bn : (svc.en || svc.bn)) : '';
+        } else if (_busServiceAutoFilled && currentLocalRoute) {
+            autoFillBusServiceForRoute(currentLocalRoute);
         }
         populateBusServiceList(selectedRouteNo || (currentLocalRoute ? currentLocalRoute.route_no : null));
 
@@ -5963,10 +5965,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (typeof updateNoticeSection === 'function') updateNoticeSection();
         if (localFromDropdown.classList.contains('active') && _fromStopsList.length) {
-            showStopDropdown(localFromInput, localFromDropdown, _fromStopsList, _selectedFromStop, handleFromStopSelected);
+            showStopDropdown(localFromInput, localFromDropdown, _fromStopsList, _selectedFromStop, handleFromStopSelected, true);
         }
         if (localToDropdown.classList.contains('active') && _toStopsList.length) {
-            showStopDropdown(localToInput, localToDropdown, _toStopsList, _selectedToStop, handleToStopSelected);
+            showStopDropdown(localToInput, localToDropdown, _toStopsList, _selectedToStop, handleToStopSelected, true);
         }
         if (busServiceDropdown.classList.contains('active')) {
             showBusServiceDropdown(filterBusServices(busServiceInput.value.trim()));
@@ -6280,7 +6282,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Input and Focus event listeners
     fromInput.addEventListener('focus', () => {
         closeAllSuggestions();
-        showFromSuggestions(fromInput.value);
+        showFromSuggestions('');
     });
 
     fromInput.addEventListener('input', () => {
@@ -6289,7 +6291,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     toInput.addEventListener('focus', () => {
         closeAllSuggestions();
-        showToSuggestions(toInput.value);
+        showToSuggestions('');
     });
 
     toInput.addEventListener('input', () => {
@@ -6682,6 +6684,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedBusServiceEn = '';
     let _busServiceRouteNos = [];
     let _allBusServicesCache = null;
+    let _busServiceAutoFilled = false;
 
     let _allLocalStopsCache = null;
     let _allLocalStopsEnMap = {};
@@ -6749,6 +6752,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         _allBusServicesCache = [...map.values()];
         return _allBusServicesCache;
+    }
+
+    function getBusServicesForRoute(routeNo) {
+        const out = [];
+        if (typeof LOCAL_BUS_SERVICES !== 'undefined' && LOCAL_BUS_SERVICES[routeNo]) {
+            const v = LOCAL_BUS_SERVICES[routeNo];
+            const arr = Array.isArray(v) ? v : [v];
+            arr.forEach(s => {
+                if (!s || !s.bn) return;
+                out.push({ bn: s.bn.trim(), en: (s.en || '').trim() });
+            });
+        }
+        return out;
+    }
+
+    function autoFillBusServiceForRoute(route) {
+        try {
+            if (selectedBusService) { _busServiceAutoFilled = false; return; }
+            if (!route) return;
+            const svcs = getBusServicesForRoute(route.route_no);
+            _busServiceAutoFilled = svcs.length > 0;
+            busServiceInput.value = _busServiceAutoFilled
+                ? svcs.map(s => currentLang === 'bn' ? s.bn : (s.en || s.bn)).join(', ')
+                : '';
+        } catch (e) { /* autoFillBusServiceForRoute error */ }
+    }
+
+    function clearAutoFilledBusService() {
+        if (_busServiceAutoFilled) {
+            _busServiceAutoFilled = false;
+            busServiceInput.value = '';
+        }
     }
 
     function getServiceFilteredStops() {
@@ -6820,6 +6855,7 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedBusService = svc.bn;
             selectedBusServiceEn = svc.en || '';
             _busServiceRouteNos = (svc.routeNos || []).slice();
+            _busServiceAutoFilled = false;
             busServiceInput.value = currentLang === 'bn' ? svc.bn : (svc.en || svc.bn);
             saveLocalSelections();
 
@@ -6863,6 +6899,7 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedBusService = '';
         selectedBusServiceEn = '';
         _busServiceRouteNos = [];
+        _busServiceAutoFilled = false;
         busServiceInput.value = '';
         busServiceDropdown.classList.remove('active');
         busServiceDropdown.innerHTML = '';
@@ -6892,9 +6929,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function showStopDropdown(inputEl, dropdownEl, stops, selectedVal, onSelect) {
+    function showStopDropdown(inputEl, dropdownEl, stops, selectedVal, onSelect, showAll) {
         dropdownEl.innerHTML = '';
-        const query = inputEl.value.trim();
+        const query = showAll ? '' : inputEl.value.trim();
         const filtered = filterStops(stops, query);
         if (filtered.length === 0) {
             const div = document.createElement('div');
@@ -6931,7 +6968,7 @@ document.addEventListener('DOMContentLoaded', () => {
         inputEl.addEventListener('focus', () => {
             const stops = getStopsFn();
             const selected = inputEl === localFromInput ? _selectedFromStop : _selectedToStop;
-            showStopDropdown(inputEl, dropdownEl, stops, selected, onSelect);
+            showStopDropdown(inputEl, dropdownEl, stops, selected, onSelect, true);
         });
         inputEl.addEventListener('blur', () => {
             setTimeout(() => {
@@ -7082,6 +7119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clearLocalResults();
         currentLocalRoute = null;
         selectedRouteNo = '';
+        clearAutoFilledBusService();
     }
 
     function cleanStopName(name) {
@@ -7097,6 +7135,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 _busServiceRouteNos = [];
                 busServiceInput.value = '';
             }
+            autoFillBusServiceForRoute(route);
             currentLocalRoute = route;
             selectedRouteNo = route.route_no || '';
             localRouteInput.value = route.route_no + ' - ' + (currentLang === 'bn' ? (route.route_name_bn || '') : (route.route_name_en || ''));
@@ -7306,6 +7345,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentLocalRoute = null;
                 selectedRouteNo = '';
                 localRouteInput.value = '';
+                clearAutoFilledBusService();
             } else {
                 _selectedToStop = '';
                 localToInput.value = '';
@@ -7339,6 +7379,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentLocalRoute = null;
                 localRouteInfo.style.display = 'none';
                 populateBusServiceList(null);
+                clearAutoFilledBusService();
                 return;
             }
             const filtered = filterRoutesByText(query);
@@ -7369,6 +7410,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     busServiceInput.addEventListener('input', () => {
         try {
+            _busServiceAutoFilled = false;
             const raw = busServiceInput.value;
             const trimmed = raw.trim();
             const all = getAllBusServices();
@@ -7387,7 +7429,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     busServiceInput.addEventListener('focus', () => {
         try {
-            showBusServiceDropdown(filterBusServices(busServiceInput.value.trim()));
+            const query = busServiceInput.value.trim();
+            const filtered = filterBusServices(query);
+            showBusServiceDropdown(filtered.length ? filtered : getAllBusServices());
         } catch(e) {}
     });
 
