@@ -11,7 +11,7 @@ const LOCAL_STOP_EN = {
   "আনসারক্যাম্প": "Ansar Camp",
   "আবুল হোটেল": "Abul Hotel",
   "আব্দুল্লাহপুর": "Abdullahpur",
-  "আব্দুল্লাহপুর জেলখানা)": "Abdullahpur (Jailkhana)",
+  "আব্দুল্লাহপুর (জেলখানা)": "Abdullahpur (Jailkhana)",
   "আমিন বাজার": "Amin Bazar",
   "আমুলিয়া স্টাফ কোয়ার্টার": "Amulia Staff Quarter",
   "আরামবাগ": "Arambagh",
