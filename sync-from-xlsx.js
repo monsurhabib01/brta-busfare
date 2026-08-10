@@ -2,20 +2,23 @@ const XLSX = require('xlsx');
 const fs = require('fs');
 const path = require('path');
 
-const XLSX_PATH = path.join(__dirname, '111_Local route_With Fare Matrix Chart.xlsx');
-const BUS_SERVICE_XLSX_PATH = path.join(__dirname, '111_Local route_With Bus Service Name.xlsx');
+const XLSX_PATH = path.join(__dirname, '112_Local route_With Fare Matrix Chart.xlsx');
+const BUS_SERVICE_XLSX_PATH = path.join(__dirname, '112_Local route_With Bus Service Name.xlsx');
 const ROUTES_OUT = path.join(__dirname, 'local_routes_data.json');
 const FARE_MATRIX_OUT = path.join(__dirname, 'local_fare_matrix.json');
 const DISTANCE_OUT = path.join(__dirname, 'local_routes_distance.json');
+const DISTANCE_MATRIX_OUT = path.join(__dirname, 'local_distance_matrix.json');
 const BUS_SERVICE_OUT = path.join(__dirname, 'local_bus_services.json');
 
 const BN_DIGITS = { '০':'0','১':'1','২':'2','৩':'3','৪':'4','৫':'5','৬':'6','৭':'7','৮':'8','৯':'9' };
+const DEVA_DIGITS = { '०':'0','१':'1','२':'2','३':'3','४':'4','५':'5','६':'6','७':'7','८':'8','९':'9' };
 
 function bnToNum(s) {
     if (s === null || s === undefined) return NaN;
     let str = String(s).trim();
     if (!str) return NaN;
     str = str.replace(/[০-৯]/g, d => BN_DIGITS[d]);
+    str = str.replace(/[०-९]/g, d => DEVA_DIGITS[d]);
     str = str.replace(/[^\d.\-]/g, '');
     return parseFloat(str);
 }
@@ -82,6 +85,42 @@ function parseTotalDistance(cell) {
 
 function cleanCellText(s) {
     return String(s || '').replace(/[।]+$/, '').replace(/\s+/g, ' ').trim();
+}
+
+// Restore stop names that were manually curated to their full forms in earlier
+// commits. The 112 xlsx stores abbreviated/spelling-variant names (মোঃপুর,
+// নাঃগঞ্জ, a broken parenthesis in আব্দুল্লাহপুর জেলখানা) — keep the app's
+// curated names so both stop display and matrix keys stay consistent.
+const NAME_NORMALIZATION = {
+    'মোঃপুর (জাপান গার্ডেন সিটি)': 'মোহাম্মদপুর (জাপান গার্ডেন সিটি)',
+    'মোঃপুর': 'মোহাম্মদপুর',
+    'নাঃগঞ্জ লিংক রোড': 'নারায়নগঞ্জ লিংক রোড',
+    'মোঃপুর টাউন হল': 'মোহাম্মদপুর টাউন হল',
+    'নদ্দা': 'নৰ্দ্দা',
+    'মোঃবাসস্ট্যান্ড': 'মোহাম্মদপুর বাসস্ট্যান্ড',
+    'আব্দুল্লাহপুর জেলখানা)': 'আব্দুল্লাহপুর (জেলখানা)'
+};
+
+function normalizeStopName(name) {
+    const cleaned = cleanCellText(name);
+    return NAME_NORMALIZATION[cleaned] || cleaned;
+}
+
+// Mirrors the browser-side cleanStopName() in script.js so matrix lookup keys
+// are byte-identical to what the app computes before lookup.
+function cleanStopName(name) {
+    return String(name || '')
+        .replace(/[।]+$/, '')
+        .replace(/[।]+ /g, ', ')
+        .replace(/ হয়ে .+/, '')
+        .trim();
+}
+
+// Same transformation as getLocalExactFare/getLocalExactDistance in script.js:
+// cleanStopName(...).normalize('NFC').trim() — critical because Bengali র/ড়
+// sequences (e.g. U+09DC vs U+09A1 U+09BC) differ until NFC-normalized.
+function stopLookupKey(name) {
+    return cleanStopName(name).normalize('NFC').trim();
 }
 
 function extractUnicodeCellValue(cell) {
@@ -194,7 +233,7 @@ function getColumnStopNames(headerIdx) {
     for (let c = 2; c < row.length; c++) {
         const val = row[c];
         if (val !== null && val !== undefined && String(val).trim()) {
-            names.push(String(val).trim());
+            names.push(normalizeStopName(String(val).trim()));
         }
     }
     return names;
@@ -278,6 +317,7 @@ if (bnSheetName) {
 const localRoutes = [];
 const fareMatrix = {};
 const distanceData = {};
+const distanceMatrix = {};
 
 for (const block of routeBlocks) {
     if (!block.routeNo) {
@@ -291,12 +331,38 @@ for (const block of routeBlocks) {
 
     const colStopNames = getColumnStopNames(block.stopNamesHeaderIdx);
     const stopsBn = block.stops.map(s => {
-        const cleaned = cleanCellText(s.name);
+        const cleaned = normalizeStopName(s.name);
         const unicode = ensureBengali(cleaned);
         return unicode || cleaned;
     }).filter(s => s.length > 0);
 
     if (stopsBn.length < 2) continue;
+
+    // Lookup keys for every row stop, NFC-normalized exactly like the app does.
+    const stopKeys = block.stops.map(s => {
+        const cleaned = normalizeStopName(s.name);
+        const unicode = ensureBengali(cleaned);
+        return stopLookupKey(unicode || cleaned);
+    });
+
+    // Build exact distance matrix from Column B cumulative kilometer values:
+    // distance(pair) = Math.abs(km[i] - km[j]) with the same reverse-lookup key
+    // as the fare matrix ([a, b].sort().join('|')).
+    const routeDistanceMatrix = {};
+    for (let rowIdx = 0; rowIdx < block.stops.length; rowIdx++) {
+        const kmA = block.stops[rowIdx].km;
+        if (kmA === null || kmA === undefined || isNaN(kmA)) continue;
+        for (let colIdx = rowIdx + 1; colIdx < block.stops.length; colIdx++) {
+            const kmB = block.stops[colIdx].km;
+            if (kmB === null || kmB === undefined || isNaN(kmB)) continue;
+            const dist = Math.abs(kmB - kmA);
+            if (dist <= 0) continue;
+            const key = [stopKeys[rowIdx], stopKeys[colIdx]].sort().join('|');
+            if (routeDistanceMatrix[key] === undefined) {
+                routeDistanceMatrix[key] = Math.round(dist * 10) / 10;
+            }
+        }
+    }
 
     const originBn = stopsBn[0];
     const destBn = stopsBn[stopsBn.length - 1];
@@ -307,12 +373,18 @@ for (const block of routeBlocks) {
         for (let colIdx = 0; colIdx < stop.fares.length; colIdx++) {
             const fare = stop.fares[colIdx];
             if (fare !== null && fare !== undefined && fare > 0) {
-                const colStopName = colStopNames[colIdx] || (block.stops[colIdx] ? block.stops[colIdx].name : null);
-                if (!colStopName) continue;
+                // Column index maps positionally to the same stop row in the
+                // symmetric grid, so use the ROW stop name (not the header label)
+                // to keep keys consistent with stops_bn and the reverse lookup.
+                let colKey;
+                if (block.stops[colIdx]) {
+                    colKey = stopKeys[colIdx];
+                } else if (colStopNames[colIdx]) {
+                    colKey = stopLookupKey(colStopNames[colIdx]);
+                }
+                if (!colKey) continue;
 
-                const a = cleanCellText(stop.name);
-                const b = cleanCellText(colStopName);
-                const key = [a, b].sort().join('|');
+                const key = [stopKeys[rowIdx], colKey].sort().join('|');
                 if (routeFareMatrix[key] === undefined || fare < routeFareMatrix[key]) {
                     routeFareMatrix[key] = fare;
                 }
@@ -346,8 +418,9 @@ for (const block of routeBlocks) {
 
     fareMatrix[block.routeNo] = routeFareMatrix;
     distanceData[block.routeNo] = { distance_km: totalDist, rate_tk: 2.53, min_fare: 10 };
+    distanceMatrix[block.routeNo] = routeDistanceMatrix;
 
-    console.log('  ' + block.routeNo + ': ' + stopsBn.length + ' stops, ' + Object.keys(routeFareMatrix).length + ' fare pairs, ' + totalDist + ' km | EN: ' + (routeNameEn || '(none)').substring(0, 60));
+    console.log('  ' + block.routeNo + ': ' + stopsBn.length + ' stops, ' + Object.keys(routeFareMatrix).length + ' fare pairs, ' + Object.keys(routeDistanceMatrix).length + ' dist pairs, ' + totalDist + ' km | EN: ' + (routeNameEn || '(none)').substring(0, 60));
 }
 
 localRoutes.sort((a, b) => {
@@ -359,6 +432,7 @@ localRoutes.sort((a, b) => {
 fs.writeFileSync(ROUTES_OUT, JSON.stringify(localRoutes, null, 2), 'utf8');
 fs.writeFileSync(FARE_MATRIX_OUT, JSON.stringify(fareMatrix, null, 2), 'utf8');
 fs.writeFileSync(DISTANCE_OUT, JSON.stringify(distanceData, null, 2), 'utf8');
+fs.writeFileSync(DISTANCE_MATRIX_OUT, JSON.stringify(distanceMatrix, null, 2), 'utf8');
 
 // ===========================================================================
 // 4. BUS SERVICE NAMES (Bengali + English from Excel sheets)
@@ -399,17 +473,23 @@ console.log('\n=== SUMMARY ===');
 console.log('Routes:', localRoutes.length);
 let totalStops = 0;
 let totalFares = 0;
+let totalDistPairs = 0;
 const allStops = new Set();
 let enCount = 0;
 for (const r of localRoutes) {
     totalStops += r.stops_bn.length;
     r.stops_bn.forEach(s => allStops.add(s));
     totalFares += Object.keys(fareMatrix[r.route_no] || {}).length;
+    totalDistPairs += Object.keys(distanceMatrix[r.route_no] || {}).length;
     if (r.route_name_en) enCount++;
 }
 console.log('Unique stops:', allStops.size);
 console.log('Total fare pairs:', totalFares);
+console.log('Total distance pairs:', totalDistPairs);
 console.log('Routes with English descriptions:', enCount, '/', localRoutes.length);
+console.log('\nDistance matrix sample (A 101):');
+const d101 = distanceMatrix['A 101'] || {};
+Object.keys(d101).slice(0, 10).forEach(k => console.log('  ' + k + ' = ' + d101[k] + ' km'));
 console.log('\nSample English names:');
 localRoutes.slice(0, 5).forEach(r => {
     console.log('  ' + r.route_no + ': ' + (r.route_name_en || '(none)'));

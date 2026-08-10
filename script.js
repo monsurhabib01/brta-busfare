@@ -5587,6 +5587,7 @@ const ROUTES_DATA = [
 if (typeof LOCAL_ROUTES_DATA === 'undefined') var LOCAL_ROUTES_DATA = [];
 if (typeof LOCAL_FARE_MATRIX === 'undefined') var LOCAL_FARE_MATRIX = {};
 if (typeof LOCAL_ROUTES_DISTANCE === 'undefined') var LOCAL_ROUTES_DISTANCE = {};
+if (typeof LOCAL_DISTANCE_MATRIX === 'undefined') var LOCAL_DISTANCE_MATRIX = {};
 
 
 
@@ -7002,6 +7003,21 @@ document.addEventListener('DOMContentLoaded', () => {
         return null;
     }
 
+    function getLocalExactDistance(routeNo, stop1, stop2) {
+        const routeMatrix = LOCAL_DISTANCE_MATRIX[routeNo];
+        if (!routeMatrix) return null;
+        const a = cleanStopName(stop1).normalize('NFC').trim();
+        const b = cleanStopName(stop2).normalize('NFC').trim();
+        const simpleKey = [a, b].sort().join('|');
+        if (routeMatrix[simpleKey] !== undefined) return routeMatrix[simpleKey];
+        return null;
+    }
+
+    function formatLocalKm(km) {
+        const rounded = Math.round(km * 10) / 10;
+        return rounded % 1 === 0 ? String(rounded) : rounded.toFixed(1);
+    }
+
     function calculateLocalFare(route) {
         try {
             if (!route) return;
@@ -7014,6 +7030,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const exactFare = getLocalExactFare(route.route_no, fromVal, toVal);
+            const exactDistance = getLocalExactDistance(route.route_no, fromVal, toVal);
             const stops = route.stops_bn && route.stops_bn.length >= 2
                 ? route.stops_bn
                 : [route.origin_bn].concat(route.destination_bn && route.destination_bn !== route.origin_bn ? [route.destination_bn] : []);
@@ -7028,32 +7045,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const distData = LOCAL_ROUTES_DISTANCE[route.route_no] || {};
-            let distanceKm = route.distance_km || distData.distance_km || 0;
-            if (distanceKm > 0 && stops.length >= 2) {
-                const numSegments = stops.length - 1;
-                const segDistance = distanceKm / numSegments;
-                distanceKm = Math.abs(fromIndex - toIndex) * segDistance;
-            }
-
-            const rate = route.rate_tk || distData.rate_tk || 2.53;
-            const minFare = route.min_fare || distData.min_fare || 10;
-
-            if (distanceKm <= 0) {
+            if (exactDistance === null || exactDistance <= 0) {
                 localFareDisplay.value = currentLang === 'bn' ? 'দূরত্ব পাওয়া যায়নি' : 'Distance N/A';
                 localDistanceDisplay.value = currentLang === 'bn' ? '— কিঃমিঃ' : '— km';
                 localFareResult.style.display = '';
                 return;
             }
 
-            const fare = exactFare !== null ? exactFare : Math.max(minFare, Math.round(distanceKm * rate));
+            if (exactFare === null) {
+                localFareDisplay.value = currentLang === 'bn' ? 'ভাড়া পাওয়া যায়নি' : 'Fare N/A';
+                localDistanceDisplay.value = currentLang === 'bn'
+                    ? `${toBanglaNum(formatLocalKm(exactDistance))} কিঃমিঃ`
+                    : `${formatLocalKm(exactDistance)} km`;
+                localFareResult.style.display = '';
+                return;
+            }
 
             if (currentLang === 'bn') {
-                localFareDisplay.value = `৳ ${toBanglaNum(fare)} টাকা`;
-                localDistanceDisplay.value = `${toBanglaNum(Math.round(distanceKm))} কিঃমিঃ`;
+                localFareDisplay.value = `৳ ${toBanglaNum(exactFare)} টাকা`;
+                localDistanceDisplay.value = `${toBanglaNum(formatLocalKm(exactDistance))} কিঃমিঃ`;
             } else {
-                localFareDisplay.value = `৳ ${fare} Tk`;
-                localDistanceDisplay.value = `${Math.round(distanceKm)} km`;
+                localFareDisplay.value = `৳ ${exactFare} Tk`;
+                localDistanceDisplay.value = `${formatLocalKm(exactDistance)} km`;
             }
 
             currentLocalRoute = route;
@@ -7565,10 +7578,12 @@ document.addEventListener('DOMContentLoaded', () => {
             fetch('./local_routes_data.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
             fetch('./local_fare_matrix.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
             fetch('./local_routes_distance.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
-        ]).then(([routes, fareMatrix, distData]) => {
+            fetch('./local_distance_matrix.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
+        ]).then(([routes, fareMatrix, distData, distMatrix]) => {
             if (routes.length > 0) LOCAL_ROUTES_DATA = routes;
             if (Object.keys(fareMatrix).length > 0) LOCAL_FARE_MATRIX = fareMatrix;
             if (Object.keys(distData).length > 0) LOCAL_ROUTES_DISTANCE = distData;
+            if (Object.keys(distMatrix).length > 0) LOCAL_DISTANCE_MATRIX = distMatrix;
             invalidateStopsCache();
             populateStopSelects();
             populateAllRoutes();

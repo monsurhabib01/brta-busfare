@@ -1,4 +1,4 @@
-const CACHE_NAME = 'brta-bus-fare-v9';
+const CACHE_NAME = 'brta-bus-fare-v10';
 
 const PRECACHE_URLS = [
     '/',
@@ -11,6 +11,7 @@ const PRECACHE_URLS = [
     './local_routes_data.json',
     './local_fare_matrix.json',
     './local_routes_distance.json',
+    './local_distance_matrix.json',
     './BRTA_Logo.png',
     './brta_bus_hero.png',
     './manifest.json',

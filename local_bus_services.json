@@ -81,7 +81,7 @@
       "en": "Airport Bangabandhu Avenue Paribahan Ltd."
     },
     {
-      "bn": "মেট্রো ক্ল্যাসিক পরিবহন লিঃ/ বিভিন্ন মালিক",
+      "bn": "মেট্রো ক্ল্যাসিক পরিবহন লিঃ",
       "en": "Metro Classic Paribahan Ltd."
     }
   ],
@@ -179,12 +179,12 @@
   ],
   "A 207": [
     {
-      "bn": "দুলদুল/বিভিন্ন মালিক",
-      "en": "Duldul"
+      "bn": "দুলদুল পরিবহন লিঃ",
+      "en": "Duldul Paribahann Ltd.\r\nV.I.P. Automobile Pvt. Ltd."
     },
     {
       "bn": "ভি.আই.পি অটোমোবাইল প্রাঃ লিঃ",
-      "en": "Various Owners"
+      "en": "Duldul Paribahann Ltd.\r\nV.I.P. Automobile Pvt. Ltd."
     }
   ],
   "A 220": [
@@ -213,8 +213,12 @@
   ],
   "A 225": [
     {
-      "bn": "বলাকা সার্ভিস/ বলাকা লিংকস্‌",
+      "bn": "বলাকা সার্ভিস",
       "en": "Balaka Service"
+    },
+    {
+      "bn": "বলাকা লিংকস্‌",
+      "en": "Balaka Links"
     }
   ],
   "A 234": [
