@@ -6622,7 +6622,6 @@ document.addEventListener('DOMContentLoaded', () => {
             busServiceDropdown.innerHTML = '';
             localFareDisplay.value = '';
             localDistanceDisplay.value = '';
-            localRouteNoDisplay.value = '';
             localRouteNameDisplay.textContent = '';
             localFareResult.style.display = 'none';
             localRouteInfo.style.display = 'none';
@@ -6668,7 +6667,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnLocalFare = document.getElementById('btn-local-fare');
     const localFareDisplay = document.getElementById('local-fare-display');
     const localDistanceDisplay = document.getElementById('local-distance-display');
-    const localRouteNoDisplay = document.getElementById('local-route-no-display');
     const localRouteNameDisplay = document.getElementById('local-route-name-display');
     const localFareResult = document.getElementById('local-fare-result');
     const localRouteInfo = document.getElementById('local-route-info');
@@ -7071,7 +7069,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             currentLocalRoute = route;
             localFareResult.style.display = '';
-            localRouteNoDisplay.value = route.route_no;
             const stopsBnCalc = route.stops_bn && route.stops_bn.length ? route.stops_bn : [];
             const stopsEnCalc = route.stops_en && route.stops_en.length
                 ? route.stops_en
@@ -7154,7 +7151,6 @@ document.addEventListener('DOMContentLoaded', () => {
             localRouteInput.value = route.route_no + ' - ' + (currentLang === 'bn' ? (route.route_name_bn || '') : (route.route_name_en || ''));
             localRouteDropdown.classList.remove('active');
             localRouteDropdown.innerHTML = '';
-            localRouteNoDisplay.value = route.route_no || '';
             const stopsBn = route.stops_bn && route.stops_bn.length ? route.stops_bn : [];
             const stopsEn = route.stops_en && route.stops_en.length
                 ? route.stops_en
