@@ -4,11 +4,13 @@ const path = require('path');
 
 const XLSX_PATH = path.join(__dirname, '112_Local route_With Fare Matrix Chart.xlsx');
 const BUS_SERVICE_XLSX_PATH = path.join(__dirname, '112_Local route_With Bus Service Name.xlsx');
+const MASTER_XLSX_PATH = path.join(__dirname, '112_LocalRoute_All Locations_Bengali and English.xlsx');
 const ROUTES_OUT = path.join(__dirname, 'local_routes_data.json');
 const FARE_MATRIX_OUT = path.join(__dirname, 'local_fare_matrix.json');
 const DISTANCE_OUT = path.join(__dirname, 'local_routes_distance.json');
 const DISTANCE_MATRIX_OUT = path.join(__dirname, 'local_distance_matrix.json');
 const BUS_SERVICE_OUT = path.join(__dirname, 'local_bus_services.json');
+const STOP_EN_OUT = path.join(__dirname, 'local_stop_en.js');
 
 const BN_DIGITS = { '০':'0','১':'1','২':'2','৩':'3','৪':'4','৫':'5','৬':'6','৭':'7','৮':'8','৯':'9' };
 const DEVA_DIGITS = { '०':'0','१':'1','२':'2','३':'3','४':'4','५':'5','६':'6','७':'7','८':'8','९':'9' };
@@ -92,18 +94,129 @@ function cleanCellText(s) {
 // নাঃগঞ্জ, a broken parenthesis in আব্দুল্লাহপুর জেলখানা) — keep the app's
 // curated names so both stop display and matrix keys stay consistent.
 const NAME_NORMALIZATION = {
+    // Fix broken spellings in the fare sheet so every stop maps to exactly one
+    // canonical Bengali spelling (matching the master list where it exists).
     'মোঃপুর (জাপান গার্ডেন সিটি)': 'মোহাম্মদপুর (জাপান গার্ডেন সিটি)',
     'মোঃপুর': 'মোহাম্মদপুর',
     'নাঃগঞ্জ লিংক রোড': 'নারায়নগঞ্জ লিংক রোড',
     'মোঃপুর টাউন হল': 'মোহাম্মদপুর টাউন হল',
     'নদ্দা': 'নৰ্দ্দা',
     'মোঃবাসস্ট্যান্ড': 'মোহাম্মদপুর বাসস্ট্যান্ড',
-    'আব্দুল্লাহপুর জেলখানা)': 'আব্দুল্লাহপুর (জেলখানা)'
+    'আব্দুল্লাহপুর জেলখানা)': 'আব্দুল্লাহপুর (জেলখানা)',
+    'নুতন বাজার': 'নতুন বাজার',
+    'কালসী': 'কালশী',
+    'কালশি': 'কালশী',
+    'গুলিস্থান': 'গুলিস্তান',
+    'কাঁচপুরব্রীজ': 'কাঁচপুর ব্রীজ',
+    'আনসারক্যাম্প': 'আনসার ক্যাম্প',
+    'আসাদগেট': 'আসাদ গেট',
+    'আসাদগেইট': 'আসাদ গেট',
+    'আসাদ গেইট': 'আসাদ গেট',
+    'নটরড্যাম কলেজ': 'নটর ডেম কলেজ',
+    'নটরডেম কলেজ': 'নটর ডেম কলেজ',
+    'কলেজগেট': 'কলেজ গেইট',
+    'কলেজগেইট': 'কলেজ গেইট',
+    'কাওরানবাজার': 'কাওরান বাজার',
+    'নিউমার্কেট': 'নিউ মার্কেট',
+    'সাইন্সল্যাব': 'সাইন্সল্যাবঃ',
+    'সাইন্সল্যাব:': 'সাইন্সল্যাবঃ',
+    'কাকলি': 'কাকলী',
+    'বাবুবাজার ব্রীজ': 'বাবু বাজার ব্রীজ',
+    'কেরানীগঞ্জ (নতুন জেল খানা)': 'কেরানীগঞ্জ (নতুন জেলখানা)',
+    'বাংলামটর': 'বাংলা মটর',
+    'বাংলামোটর': 'বাংলা মটর',
+    'শঙ্কর': 'শংকর',
+    'ধানমন্ডী-১৫': 'ধানমন্ডি-১৫',
+    'হাউজবিল্ডিং': 'হাউজ বিল্ডিং',
+    'গাবতলি': 'গাবতলী',
+    'ধওর': 'ধউর',
+    'জিরাব': 'জিরাবো',
+    'ফ্যান্টাসী': 'ফ্যান্টাসী কিংডম',
+    'ফ্যান্টাসি কিংডম': 'ফ্যান্টাসী কিংডম',
+    'ইপিজেট': 'ইপিজেড',
+    'নন্দনপার্ক': 'নন্দন পার্ক',
+    'নন্দনপাক': 'নন্দন পার্ক',
+    'টঙ্গী': 'টংঙ্গী',
+    'টংগী': 'টংঙ্গী',
+    'প্রগতি সরনী': 'প্রগতি সরণী',
+    'মেঘনাঘাট': 'মেঘনা ঘাট',
+    'চানখারপুল': 'চাঁনখারপুল',
+    'ইসিবি চত্বর': 'ইসিবি চত্ত্বর',
+    'খিলগাও ফ্লাইওভার': 'খিলগাঁও ফ্লাইওভার',
+    'মোঃ জিলুর রহমান ফ্লাইওভার': 'মোঃ জিল্লুর রহমান ফ্লাইওভার',
+    'মোঃ জিলুর রাহমান ফ্লাইওভার': 'মোঃ জিল্লুর রহমান ফ্লাইওভার',
+    'অরিজিনাল দশ': 'অরিজিনাল-১০',
+    'কাজিপাড়া': 'কাজীপাড়া',
+    'সায়দাবাদ': 'সায়েদাবাদ',
+    'মিরপুর-১১১/২': 'মিরপুর-১১.৫',
+    'মিরপুর সাড়ে ১১': 'মিরপুর-১১.৫',
+    'ভিক্টোরিয়াপার্ক': 'ভিক্টোরিয়া পার্ক',
+    'দুয়ারিপাড়া': 'দুয়ারীপাড়া',
+    'সায়েন্সল্যাব': 'সাইন্সল্যাবঃ',
+    'মানিকমিয়া এভিনিউ': 'মানিক মিয়া এভিনিউ',
+    'কামারপাড়া': 'কামার পাড়া',
+    'বিমানবন্দর': 'এয়ারপোর্ট',
+    'ফুলবাড়িয়া': 'ফুলবাড়ীয়া',
+    'কোণাবাড়ী': 'কোনাবাড়ী',
+    'শনিরআখড়া': 'শনির আখড়া',
+    'কালশীর মোড়': 'কালশী মোড়',
+    'কালশি মোড়': 'কালশী মোড়',
+    'কালশিমোড়': 'কালশী মোড়'
 };
 
+// ===========================================================================
+// MASTER LOCATION LIST (authoritative Bengali spellings + English names)
+// ===========================================================================
+
+function normalizeBnText(s) {
+    return String(s || '').normalize('NFC').replace(/\s+/g, ' ').trim();
+}
+
+// Load the official Bengali<->English location pairs from the master file.
+// Each row is a distinct official stop; two rows may share the same English
+// (e.g. genuine spelling variants), so the Bengali spelling is the unique key.
+function loadMasterLocations() {
+    const wb = XLSX.readFile(MASTER_XLSX_PATH, { type: 'file', codepage: 65001 });
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+    const master = [];
+    for (let i = 1; i < rows.length; i++) {
+        const bn = normalizeBnText(rows[i][0]);
+        const en = String(rows[i][1] || '').trim();
+        if (bn) master.push({ bn, en });
+    }
+    const byBn = new Map();
+    for (const m of master) byBn.set(m.bn, m);
+    return { master, byBn };
+}
+const MASTER = loadMasterLocations();
+console.log('Master locations loaded:', MASTER.master.length);
+
+// The previous local_stop_en.js supplies English for data stops that are not
+// in the master list, so regenerating keeps every translation. The output
+// dictionary contains exactly: master pairs + current data stops.
+let EXISTING_STOP_EN = {};
+try {
+    const src = fs.readFileSync(STOP_EN_OUT, 'utf8');
+    const obj = new Function('return ' + src.match(/\{[\s\S]*\}/)[0] + ';')();
+    for (const k of Object.keys(obj)) EXISTING_STOP_EN[normalizeBnText(k)] = obj[k];
+    console.log('Existing stop translations loaded:', Object.keys(EXISTING_STOP_EN).length);
+} catch (e) {
+    console.warn('  local_stop_en.js not loadable; dictionary starts from master only:', e.message);
+}
+
+// NFC-normalized lookup for the normalization map, so a mapping matches even
+// when the fare sheet encodes Bengali conjuncts differently (e.g. ড় as
+// precomposed U+09DC vs decomposed U+09A1 U+09BC). NFC normalization keeps
+// stop names byte-identical to the app's NFC lookup keys and master entries.
+const NAME_NORM_NFC = new Map();
+for (const k of Object.keys(NAME_NORMALIZATION)) {
+    NAME_NORM_NFC.set(k.normalize('NFC'), NAME_NORMALIZATION[k].normalize('NFC'));
+}
+
 function normalizeStopName(name) {
-    const cleaned = cleanCellText(name);
-    return NAME_NORMALIZATION[cleaned] || cleaned;
+    const cleaned = cleanCellText(name).normalize('NFC');
+    return NAME_NORM_NFC.get(cleaned) || cleaned;
 }
 
 // Mirrors the browser-side cleanStopName() in script.js so matrix lookup keys
@@ -466,7 +579,69 @@ console.log('Wrote', BUS_SERVICE_OUT);
 console.log('Routes with services:', Object.keys(busServiceOutput).length);
 
 // ===========================================================================
-// 5. SUMMARY
+// 5. GENERATE local_stop_en.js (superset Bengali->English dictionary)
+// ===========================================================================
+//
+// LOCAL_STOP_EN is a pure lookup: every Bengali spelling (data spelling or
+// master spelling) maps to its English name. Distinct spellings may share an
+// English name (master lists variants as separate rows), so duplicate values
+// are expected. Output = previous dictionary + all master pairs + any data
+// stop that gains a translation, so regenerating is idempotent and complete.
+
+console.log('\n========== STOP ENGLISH TRANSLATIONS ==========');
+
+const stopEn = new Map();
+for (const m of MASTER.master) {
+    stopEn.set(normalizeBnText(m.bn), m.en);
+}
+
+let addedFromExisting = 0;
+const dataStopSet = new Set();
+for (const r of localRoutes) r.stops_bn.forEach(s => dataStopSet.add(s));
+for (const s of dataStopSet) {
+    const key = normalizeBnText(s);
+    if (stopEn.has(key)) continue;
+    const en = EXISTING_STOP_EN[key];
+    if (en) { stopEn.set(key, en); addedFromExisting++; }
+}
+
+const stopEnEntries = [...stopEn.entries()]
+    .map(([key, en]) => [key, en === 'Original Dash' ? 'Original-10' : en])
+    .sort((a, b) => a[0].localeCompare(b[0], 'bn'));
+let stopEnOut = 'const LOCAL_STOP_EN = {\n';
+for (const [key, en] of stopEnEntries) {
+    stopEnOut += '  ' + JSON.stringify(key) + ': ' + JSON.stringify(en) + ',\n';
+}
+stopEnOut += '};\n';
+fs.writeFileSync(STOP_EN_OUT, stopEnOut, 'utf8');
+console.log('Wrote', STOP_EN_OUT, 'with', stopEnEntries.length, 'entries');
+console.log('Non-master data stops given existing English:', addedFromExisting);
+const uncovered = [...dataStopSet].filter(s => !stopEn.has(normalizeBnText(s)));
+console.log('Data stops without any translation:', uncovered.length === 0 ? 0 : uncovered.join(', '));
+
+// Guardrail: warn if any stop still maps to a shared English name, so a new
+// fare-sheet spelling variant is caught on every sync instead of silently
+// duplicating entries in the app's stop dropdown. Stops are grouped by their
+// NFC key (the app dedupes on the NFC key), so pure codepoint-encoding
+// variants of the same spelling do not count as duplicates.
+const enByName = new Map();
+for (const s of dataStopSet) {
+    const key = normalizeBnText(s);
+    const e = stopEn.get(key);
+    if (!e) continue;
+    if (!enByName.has(e)) enByName.set(e, new Map());
+    enByName.get(e).set(key, s);
+}
+const dupEn = [...enByName.entries()].filter(([, v]) => v.size > 1);
+if (dupEn.length) {
+    console.log('WARNING: duplicate English stop names still in data:');
+    for (const [e, v] of dupEn) console.log('  ' + e + ' x' + v.size + ' => ' + [...v.values()].join(' | '));
+} else {
+    console.log('No duplicate English stop names in data.');
+}
+
+// ===========================================================================
+// 6. SUMMARY
 // ===========================================================================
 
 console.log('\n=== SUMMARY ===');
