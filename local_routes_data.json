@@ -454,7 +454,7 @@
     "route_name_en": "Pirjangi Mazar to Notun Bazar",
     "origin_bn": "পীরজঙ্গী মাজার",
     "origin_en": "",
-    "destination_bn": "বাস স্টপেজ",
+    "destination_bn": "নতুন বাজার",
     "destination_en": "",
     "stops_bn": [
       "পীরজঙ্গী মাজার",
@@ -471,8 +471,7 @@
       "তিতুমীর কলেজ",
       "গুলশান-১",
       "নতুন বাজার",
-      "নতুন বাজার",
-      "বাস স্টপেজ"
+      "নতুন বাজার"
     ],
     "stops_en": [],
     "distance_km": 15,

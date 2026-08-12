@@ -2,9 +2,9 @@ const XLSX = require('xlsx');
 const fs = require('fs');
 const path = require('path');
 
-const XLSX_PATH = path.join(__dirname, '112_Local route_With Fare Matrix Chart.xlsx');
-const BUS_SERVICE_XLSX_PATH = path.join(__dirname, '112_Local route_With Bus Service Name.xlsx');
-const MASTER_XLSX_PATH = path.join(__dirname, '112_LocalRoute_All Locations_Bengali and English.xlsx');
+const XLSX_PATH = path.join(__dirname, '111_Local route_With Fare Matrix Chart.xlsx');
+const BUS_SERVICE_XLSX_PATH = path.join(__dirname, '111_Local route_With Bus Service Name.xlsx');
+const MASTER_XLSX_PATH = path.join(__dirname, '111_LocalRoute_All Locations_Bengali and English.xlsx');
 const ROUTES_OUT = path.join(__dirname, 'local_routes_data.json');
 const FARE_MATRIX_OUT = path.join(__dirname, 'local_fare_matrix.json');
 const DISTANCE_OUT = path.join(__dirname, 'local_routes_distance.json');
@@ -289,6 +289,8 @@ while (i < data.length) {
             if (!firstCell && (secondCell === undefined || secondCell === null || String(secondCell).trim() === '')) break;
             if (isRouteHeader(firstCell)) break;
             if (firstCell.includes('কিঃমিঃ') || firstCell.includes('কিঃ মিঃ')) break;
+            const secondCellStr = secondCell !== undefined && secondCell !== null ? String(secondCell) : '';
+            if (secondCellStr.includes('কিঃমিঃ') || secondCellStr.includes('কিঃ মিঃ')) break;
 
             let stopName, kmFromOrigin;
             const col1Num = bnToNum(secondCell);
