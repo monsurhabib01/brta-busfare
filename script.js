@@ -11,8 +11,8 @@ const ROUTES_DATA = [
         "to": "ময়মনসিংহ",
         "via": "ভালুকা",
         "distance": 116.0,
-        "fare_51": 259,
-        "fare_40": 330
+        "fare_51": 278,
+        "fare_40": 355
     },
     {
         "sheet": "Mohakhali New",
@@ -23,8 +23,8 @@ const ROUTES_DATA = [
         "to": "ময়মনসিংহ",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল",
         "distance": 186.0,
-        "fare_51": 415,
-        "fare_40": 529
+        "fare_51": 446,
+        "fare_40": 569
     },
     {
         "sheet": "Mohakhali New",
@@ -35,8 +35,8 @@ const ROUTES_DATA = [
         "to": "মুক্তাগাছা",
         "via": "ভালুকা, ময়মনসিংহ",
         "distance": 132.0,
-        "fare_51": 294,
-        "fare_40": 375
+        "fare_51": 317,
+        "fare_40": 404
     },
     {
         "sheet": "Mohakhali New",
@@ -47,8 +47,8 @@ const ROUTES_DATA = [
         "to": "ফুলবাড়ীয়া",
         "via": "ভালুকা, ময়মনসিংহ",
         "distance": 136.0,
-        "fare_51": 303,
-        "fare_40": 387
+        "fare_51": 326,
+        "fare_40": 416
     },
     {
         "sheet": "Mohakhali New",
@@ -59,8 +59,8 @@ const ROUTES_DATA = [
         "to": "গৌরীপুর",
         "via": "ভালুকা, ময়মনসিংহ",
         "distance": 140.0,
-        "fare_51": 314,
-        "fare_40": 400
+        "fare_51": 338,
+        "fare_40": 431
     },
     {
         "sheet": "Mohakhali New",
@@ -71,8 +71,8 @@ const ROUTES_DATA = [
         "to": "হালুয়াঘাট",
         "via": "ভালুকা, ময়মনসিংহ",
         "distance": 166.0,
-        "fare_51": 372,
-        "fare_40": 474
+        "fare_51": 400,
+        "fare_40": 510
     },
     {
         "sheet": "Mohakhali New",
@@ -83,8 +83,8 @@ const ROUTES_DATA = [
         "to": "গফরগাঁও",
         "via": "ভালুকা",
         "distance": 96.0,
-        "fare_51": 214,
-        "fare_40": 273
+        "fare_51": 230,
+        "fare_40": 294
     },
     {
         "sheet": "Mohakhali New",
@@ -95,8 +95,8 @@ const ROUTES_DATA = [
         "to": "তারাকান্দা",
         "via": "ভালুকা, ময়মনসিংহ",
         "distance": 134.0,
-        "fare_51": 299,
-        "fare_40": 381
+        "fare_51": 322,
+        "fare_40": 410
     },
     {
         "sheet": "Mohakhali New",
@@ -107,8 +107,8 @@ const ROUTES_DATA = [
         "to": "কেশরগঞ্জ",
         "via": "ভালুকা, ময়মনসিংহ, ফুলবাড়ীয়া",
         "distance": 150.0,
-        "fare_51": 336,
-        "fare_40": 429
+        "fare_51": 362,
+        "fare_40": 461
     },
     {
         "sheet": "Mohakhali New",
@@ -119,8 +119,8 @@ const ROUTES_DATA = [
         "to": "জামালপুর",
         "via": "আশুলিয়া, টাঙ্গাইল, মধুপুর",
         "distance": 173.0,
-        "fare_51": 386,
-        "fare_40": 492
+        "fare_51": 415,
+        "fare_40": 529
     },
     {
         "sheet": "Mohakhali New",
@@ -131,8 +131,8 @@ const ROUTES_DATA = [
         "to": "জামালপুর",
         "via": "ভালুকা, ময়মনসিংহ, মধুপুর",
         "distance": 202.0,
-        "fare_51": 452,
-        "fare_40": 576
+        "fare_51": 486,
+        "fare_40": 620
     },
     {
         "sheet": "Mohakhali New",
@@ -143,8 +143,8 @@ const ROUTES_DATA = [
         "to": "সরিষাবাড়ী",
         "via": "আশুলিয়া, টাঙ্গাইল",
         "distance": 166.0,
-        "fare_51": 370,
-        "fare_40": 472
+        "fare_51": 398,
+        "fare_40": 508
     },
     {
         "sheet": "Mohakhali New",
@@ -155,8 +155,8 @@ const ROUTES_DATA = [
         "to": "তারাকান্দি",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল, মধুপুর",
         "distance": 181.0,
-        "fare_51": 404,
-        "fare_40": 515
+        "fare_51": 434,
+        "fare_40": 554
     },
     {
         "sheet": "Mohakhali New",
@@ -167,8 +167,8 @@ const ROUTES_DATA = [
         "to": "নান্দিনা",
         "via": "আশুলিয়া, টাঙ্গাইল, জামালপুর",
         "distance": 183.0,
-        "fare_51": 408,
-        "fare_40": 520
+        "fare_51": 439,
+        "fare_40": 560
     },
     {
         "sheet": "Mohakhali New",
@@ -179,8 +179,8 @@ const ROUTES_DATA = [
         "to": "নেত্রকোনা",
         "via": "ভালুকা, ময়মনসিংহ",
         "distance": 155.0,
-        "fare_51": 347,
-        "fare_40": 443
+        "fare_51": 374,
+        "fare_40": 476
     },
     {
         "sheet": "Mohakhali New",
@@ -191,8 +191,8 @@ const ROUTES_DATA = [
         "to": "কেন্দুয়া",
         "via": "ভালুকা, ময়মনসিংহ",
         "distance": 186.0,
-        "fare_51": 416,
-        "fare_40": 531
+        "fare_51": 448,
+        "fare_40": 571
     },
     {
         "sheet": "Mohakhali New",
@@ -203,8 +203,8 @@ const ROUTES_DATA = [
         "to": "কেন্দুয়া",
         "via": "টঙ্গী, রাজেন্দ্রপুর, কাপাসিয়া, কটিয়াদী, কিশোরগঞ্জ, নান্দাইল চৌরাস্তা",
         "distance": 153.0,
-        "fare_51": 343,
-        "fare_40": 438
+        "fare_51": 369,
+        "fare_40": 471
     },
     {
         "sheet": "Mohakhali New",
@@ -215,8 +215,8 @@ const ROUTES_DATA = [
         "to": "নাজিরপুর",
         "via": "ভালুকা, ময়মনসিংহ, পূর্বধলা",
         "distance": 168.0,
-        "fare_51": 376,
-        "fare_40": 480
+        "fare_51": 405,
+        "fare_40": 516
     },
     {
         "sheet": "Mohakhali New",
@@ -227,8 +227,8 @@ const ROUTES_DATA = [
         "to": "শেরপুর",
         "via": "ভালুকা, ময়মনসিংহ, জামালপুর",
         "distance": 227.0,
-        "fare_51": 508,
-        "fare_40": 648
+        "fare_51": 546,
+        "fare_40": 697
     },
     {
         "sheet": "Mohakhali New",
@@ -239,8 +239,8 @@ const ROUTES_DATA = [
         "to": "শেরপুর",
         "via": "টাঙ্গাইল, জামালপুর",
         "distance": 188.0,
-        "fare_51": 421,
-        "fare_40": 537
+        "fare_51": 453,
+        "fare_40": 577
     },
     {
         "sheet": "Mohakhali New",
@@ -251,8 +251,8 @@ const ROUTES_DATA = [
         "to": "শেরপুর",
         "via": "ভালুকা, ময়মনসিংহ, নকলা",
         "distance": 183.0,
-        "fare_51": 410,
-        "fare_40": 522
+        "fare_51": 441,
+        "fare_40": 562
     },
     {
         "sheet": "Mohakhali New",
@@ -263,8 +263,8 @@ const ROUTES_DATA = [
         "to": "নালিতাবাড়ী",
         "via": "টাঙ্গাইল, জামালপুর, শেরপুর",
         "distance": 220.0,
-        "fare_51": 492,
-        "fare_40": 628
+        "fare_51": 530,
+        "fare_40": 675
     },
     {
         "sheet": "Mohakhali New",
@@ -275,8 +275,8 @@ const ROUTES_DATA = [
         "to": "নালিতাবাড়ী",
         "via": "ভালুকা, ময়মনসিংহ",
         "distance": 192.0,
-        "fare_51": 428,
-        "fare_40": 546
+        "fare_51": 461,
+        "fare_40": 588
     },
     {
         "sheet": "Mohakhali New",
@@ -287,8 +287,8 @@ const ROUTES_DATA = [
         "to": "রাজশাহী",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, বড়াইগ্রাম, নাটোর",
         "distance": 252.0,
-        "fare_51": 591,
-        "fare_40": 754
+        "fare_51": 634,
+        "fare_40": 809
     },
     {
         "sheet": "Mohakhali New",
@@ -299,8 +299,8 @@ const ROUTES_DATA = [
         "to": "রাজশাহী",
         "via": "গাজীপুর চৌরাস্তা, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, বড়াইগ্রাম, নাটোর",
         "distance": 267.0,
-        "fare_51": 625,
-        "fare_40": 797
+        "fare_51": 670,
+        "fare_40": 855
     },
     {
         "sheet": "Mohakhali New",
@@ -311,8 +311,8 @@ const ROUTES_DATA = [
         "to": "বগুড়া",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, হাটিকুমরুল",
         "distance": 192.0,
-        "fare_51": 456,
-        "fare_40": 582
+        "fare_51": 489,
+        "fare_40": 623
     },
     {
         "sheet": "Mohakhali New",
@@ -323,8 +323,8 @@ const ROUTES_DATA = [
         "to": "সিরাজগঞ্জ",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু",
         "distance": 128.0,
-        "fare_51": 313,
-        "fare_40": 400
+        "fare_51": 335,
+        "fare_40": 427
     },
     {
         "sheet": "Mohakhali New",
@@ -335,8 +335,8 @@ const ROUTES_DATA = [
         "to": "নওগাঁ",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, হাটিকুমরুল, বগুড়া",
         "distance": 242.0,
-        "fare_51": 568,
-        "fare_40": 724
+        "fare_51": 609,
+        "fare_40": 776
     },
     {
         "sheet": "Mohakhali New",
@@ -347,8 +347,8 @@ const ROUTES_DATA = [
         "to": "চাঁপাইনবাবগঞ্জ",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, বড়াইগ্রাম, নাটোর, রাজশাহী",
         "distance": 297.0,
-        "fare_51": 692,
-        "fare_40": 882
+        "fare_51": 742,
+        "fare_40": 946
     },
     {
         "sheet": "Mohakhali New",
@@ -359,8 +359,8 @@ const ROUTES_DATA = [
         "to": "পাবনা",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, নলকা",
         "distance": 235.0,
-        "fare_51": 552,
-        "fare_40": 704
+        "fare_51": 592,
+        "fare_40": 755
     },
     {
         "sheet": "Mohakhali New",
@@ -371,8 +371,8 @@ const ROUTES_DATA = [
         "to": "জয়পুরহাট",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, হাটিকুমরুল, বগুড়া",
         "distance": 247.0,
-        "fare_51": 579,
-        "fare_40": 738
+        "fare_51": 621,
+        "fare_40": 792
     },
     {
         "sheet": "Mohakhali New",
@@ -383,8 +383,8 @@ const ROUTES_DATA = [
         "to": "রংপুর",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, হাটিকুমরুল, বগুড়া",
         "distance": 297.0,
-        "fare_51": 690,
-        "fare_40": 880
+        "fare_51": 741,
+        "fare_40": 945
     },
     {
         "sheet": "Mohakhali New",
@@ -395,8 +395,8 @@ const ROUTES_DATA = [
         "to": "রংপুর",
         "via": "গাজীপুর চৌরাস্তা, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, হাটিকুমরুল, বগুড়া",
         "distance": 297.0,
-        "fare_51": 690,
-        "fare_40": 880
+        "fare_51": 741,
+        "fare_40": 945
     },
     {
         "sheet": "Mohakhali New",
@@ -407,8 +407,8 @@ const ROUTES_DATA = [
         "to": "ঠাকুরগাঁও",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, হাটিকুমরুল, বগুড়া, ঘোড়াঘাট, দিনাজপুর",
         "distance": 389.0,
-        "fare_51": 895,
-        "fare_40": 1142
+        "fare_51": 962,
+        "fare_40": 1226
     },
     {
         "sheet": "Mohakhali New",
@@ -419,8 +419,8 @@ const ROUTES_DATA = [
         "to": "দিনাজপুর",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, হাটিকুমরুল, বগুড়া, ঘোড়াঘাট",
         "distance": 330.0,
-        "fare_51": 764,
-        "fare_40": 974
+        "fare_51": 820,
+        "fare_40": 1046
     },
     {
         "sheet": "Mohakhali New",
@@ -431,8 +431,8 @@ const ROUTES_DATA = [
         "to": "পঞ্চগড়",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, হাটিকুমরুল, বগুড়া, ঘোড়াঘাট, দিনাজপুর, ঠাকুরগাঁও",
         "distance": 425.0,
-        "fare_51": 976,
-        "fare_40": 1244
+        "fare_51": 1048,
+        "fare_40": 1336
     },
     {
         "sheet": "Mohakhali New",
@@ -443,8 +443,8 @@ const ROUTES_DATA = [
         "to": "কুড়িগ্রাম",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, হাটিকুমরুল, বগুড়া, রংপুর, মিঠাপুকুর, হারাগাছ",
         "distance": 341.0,
-        "fare_51": 788,
-        "fare_40": 1005
+        "fare_51": 846,
+        "fare_40": 1079
     },
     {
         "sheet": "Mohakhali New",
@@ -455,8 +455,8 @@ const ROUTES_DATA = [
         "to": "চিলমারী",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, হাটিকুমরুল, বগুড়া, কুড়িগ্রাম",
         "distance": 374.0,
-        "fare_51": 862,
-        "fare_40": 1099
+        "fare_51": 926,
+        "fare_40": 1180
     },
     {
         "sheet": "Mohakhali New",
@@ -467,8 +467,8 @@ const ROUTES_DATA = [
         "to": "ধর্মপাশা (কুড়িগ্রাম)",
         "via": "ভালুকা, ময়মনসিংহ, নেত্রকোনা",
         "distance": 195.0,
-        "fare_51": 437,
-        "fare_40": 557
+        "fare_51": 470,
+        "fare_40": 599
     },
     {
         "sheet": "Mohakhali New",
@@ -479,8 +479,8 @@ const ROUTES_DATA = [
         "to": "গাইবান্ধা",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, হাটিকুমরুল, বগুড়া, পলাশবাড়ী",
         "distance": 257.0,
-        "fare_51": 601,
-        "fare_40": 766
+        "fare_51": 645,
+        "fare_40": 822
     },
     {
         "sheet": "Mohakhali New",
@@ -491,8 +491,8 @@ const ROUTES_DATA = [
         "to": "হিলি",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, হাটিকুমরুল, বগুড়া, জয়পুরহাট",
         "distance": 234.0,
-        "fare_51": 550,
-        "fare_40": 701
+        "fare_51": 590,
+        "fare_40": 752
     },
     {
         "sheet": "Mohakhali New",
@@ -503,8 +503,8 @@ const ROUTES_DATA = [
         "to": "লালমনিরহাট",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, হাটিকুমরুল, বগুড়া, হারাগাছ",
         "distance": 340.0,
-        "fare_51": 786,
-        "fare_40": 1002
+        "fare_51": 844,
+        "fare_40": 1076
     },
     {
         "sheet": "Mohakhali New",
@@ -515,8 +515,8 @@ const ROUTES_DATA = [
         "to": "নীলফামারী",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, হাটিকুমরুল, বগুড়া, রংপুর, সৈয়দপুর",
         "distance": 357.0,
-        "fare_51": 824,
-        "fare_40": 1051
+        "fare_51": 885,
+        "fare_40": 1128
     },
     {
         "sheet": "Mohakhali New",
@@ -527,8 +527,8 @@ const ROUTES_DATA = [
         "to": "দেবীগঞ্জ",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, হাটিকুমরুল, বগুড়া, রংপুর, সৈয়দপুর, নীলফামারী",
         "distance": 384.0,
-        "fare_51": 884,
-        "fare_40": 1128
+        "fare_51": 950,
+        "fare_40": 1211
     },
     {
         "sheet": "Mohakhali New",
@@ -539,8 +539,8 @@ const ROUTES_DATA = [
         "to": "গাইবান্ধা",
         "via": "গাজীপুর চৌরাস্তা, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, হাটিকুমরুল, বগুড়া",
         "distance": 265.0,
-        "fare_51": 619,
-        "fare_40": 789
+        "fare_51": 664,
+        "fare_40": 847
     },
     {
         "sheet": "Mohakhali New",
@@ -551,8 +551,8 @@ const ROUTES_DATA = [
         "to": "রৌমারী (কুড়িগ্রাম)",
         "via": "ভালুকা, ময়মনসিংহ, শেরপুর, বকশিগঞ্জ",
         "distance": 280.0,
-        "fare_51": 626,
-        "fare_40": 798
+        "fare_51": 674,
+        "fare_40": 859
     },
     {
         "sheet": "Mohakhali New",
@@ -563,8 +563,8 @@ const ROUTES_DATA = [
         "to": "কুড়িগ্রাম",
         "via": "গাজীপুর চৌরাস্তা, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, হাটিকুমরুল, বগুড়া, হারাগাছ",
         "distance": 340.0,
-        "fare_51": 786,
-        "fare_40": 1002
+        "fare_51": 844,
+        "fare_40": 1076
     },
     {
         "sheet": "Mohakhali New",
@@ -575,8 +575,8 @@ const ROUTES_DATA = [
         "to": "পঞ্চগড়",
         "via": "গাজীপুর চৌরাস্তা, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, হাটিকুমরুল, বগুড়া, রংপুর, দিনাজপুর, ঠাকুরগাও",
         "distance": 438.0,
-        "fare_51": 1005,
-        "fare_40": 1281
+        "fare_51": 1079,
+        "fare_40": 1376
     },
     {
         "sheet": "Mohakhali New",
@@ -587,8 +587,8 @@ const ROUTES_DATA = [
         "to": "চিলমারী",
         "via": "গাজীপুর চৌরাস্তা, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, হাটিকুমরুল, বগুড়া, রংপুর কুড়িগ্রাম",
         "distance": 365.0,
-        "fare_51": 842,
-        "fare_40": 1074
+        "fare_51": 904,
+        "fare_40": 1153
     },
     {
         "sheet": "Mohakhali New",
@@ -599,8 +599,8 @@ const ROUTES_DATA = [
         "to": "ভূরুঙ্গামারী",
         "via": "গাজীপুর চৌরাস্তা, চন্দ্রা, টাঙ্গাইল, যমুনা সেতু, হাটিকুমরুল, বগুড়া, রংপুর, কুড়িগ্রাম",
         "distance": 379.0,
-        "fare_51": 873,
-        "fare_40": 1113
+        "fare_51": 938,
+        "fare_40": 1195
     },
     {
         "sheet": "Mohakhali New",
@@ -611,8 +611,8 @@ const ROUTES_DATA = [
         "to": "সিলেট",
         "via": "টঙ্গী, ভৈরব, ব্রাহ্মণবাড়িয়া, মাধবপুর, শায়েস্তাগঞ্জ, শেরপুর",
         "distance": 245.0,
-        "fare_51": 557,
-        "fare_40": 710
+        "fare_51": 599,
+        "fare_40": 763
     },
     {
         "sheet": "Mohakhali New",
@@ -623,8 +623,8 @@ const ROUTES_DATA = [
         "to": "বিয়ানীবাজার (সিলেট)",
         "via": "টঙ্গী, ভৈরব, ব্রাহ্মণবাড়িয়া, মৌলভী বাজার",
         "distance": 285.0,
-        "fare_51": 646,
-        "fare_40": 824
+        "fare_51": 695,
+        "fare_40": 886
     },
     {
         "sheet": "Mohakhali New",
@@ -635,8 +635,8 @@ const ROUTES_DATA = [
         "to": "সুনামগঞ্জ",
         "via": "টঙ্গী, ভৈরব, ব্রাহ্মণবাড়িয়া, মাধবপুর, সিলেট",
         "distance": 295.0,
-        "fare_51": 669,
-        "fare_40": 853
+        "fare_51": 719,
+        "fare_40": 916
     },
     {
         "sheet": "Mohakhali New",
@@ -647,8 +647,8 @@ const ROUTES_DATA = [
         "to": "ছাতক",
         "via": "টঙ্গী, নরসিংদী, ভৈরব, মাধবপুর, শায়েস্তাগঞ্জ, সিলেট",
         "distance": 273.0,
-        "fare_51": 620,
-        "fare_40": 790
+        "fare_51": 666,
+        "fare_40": 849
     },
     {
         "sheet": "Mohakhali New",
@@ -659,8 +659,8 @@ const ROUTES_DATA = [
         "to": "হবিগঞ্জ",
         "via": "টঙ্গী, নরসিংদী, ভৈরব, মাধবপুর, শায়েস্তাগঞ্জ",
         "distance": 167.0,
-        "fare_51": 383,
-        "fare_40": 489
+        "fare_51": 412,
+        "fare_40": 525
     },
     {
         "sheet": "Mohakhali New",
@@ -671,8 +671,8 @@ const ROUTES_DATA = [
         "to": "মৌলভীবাজার",
         "via": "টঙ্গী, নরসিংদী, ভৈরব, ব্রাহ্মণবাড়িয়া, শায়েস্তাগঞ্জ",
         "distance": 210.0,
-        "fare_51": 479,
-        "fare_40": 611
+        "fare_51": 515,
+        "fare_40": 656
     },
     {
         "sheet": "Mohakhali New",
@@ -683,8 +683,8 @@ const ROUTES_DATA = [
         "to": "জাফলং",
         "via": "টঙ্গী, নরসিংদী, ভৈরব, ব্রাহ্মণবাড়িয়া, শায়েস্তাগঞ্জ, শেরপুর, সিলেট",
         "distance": 306.0,
-        "fare_51": 693,
-        "fare_40": 884
+        "fare_51": 745,
+        "fare_40": 950
     },
     {
         "sheet": "Mohakhali New",
@@ -695,8 +695,8 @@ const ROUTES_DATA = [
         "to": "ব্রাহ্মণবাড়িয়া",
         "via": "টঙ্গী, কালিগঞ্জ, নরসিংদী, ভৈরব",
         "distance": 112.0,
-        "fare_51": 257,
-        "fare_40": 328
+        "fare_51": 277,
+        "fare_40": 353
     },
     {
         "sheet": "Mohakhali New",
@@ -707,8 +707,8 @@ const ROUTES_DATA = [
         "to": "কক্সবাজার",
         "via": "কুড়িল বিশ্বরোড, রামপুরা ব্রীজ, সায়দাবাদ, কুমিল্লা, ফেনী, চট্টগ্রাম",
         "distance": 396.0,
-        "fare_51": 900,
-        "fare_40": 1148
+        "fare_51": 967,
+        "fare_40": 1233
     },
     {
         "sheet": "Mohakhali New",
@@ -719,8 +719,8 @@ const ROUTES_DATA = [
         "to": "চট্টগ্রাম",
         "via": "কুড়িল বিশ্বরোড, রামপুরা ব্রিজ, সায়দাবাদ, কুমিল্লা, ফেনী",
         "distance": 282.0,
-        "fare_51": 641,
-        "fare_40": 818
+        "fare_51": 689,
+        "fare_40": 879
     },
     {
         "sheet": "Mohakhali New",
@@ -731,8 +731,8 @@ const ROUTES_DATA = [
         "to": "কিশোরগঞ্জ",
         "via": "ভালুকা, ময়মনসিংহ, ঈশ্বরগঞ্জ, নান্দাইল",
         "distance": 179.0,
-        "fare_51": 401,
-        "fare_40": 511
+        "fare_51": 431,
+        "fare_40": 550
     },
     {
         "sheet": "Saidabad New",
@@ -5135,8 +5135,8 @@ const ROUTES_DATA = [
         "to": "টাঙ্গাইল",
         "via": "আশুলিয়া, চন্দ্রা",
         "distance": 90,
-        "fare_51": 201,
-        "fare_40": 256
+        "fare_51": 216,
+        "fare_40": 275
     },
     {
         "sheet": "Mohakhali New",
@@ -5147,8 +5147,8 @@ const ROUTES_DATA = [
         "to": "গোপালপুর",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল, ঘাটাইল",
         "distance": 129,
-        "fare_51": 288,
-        "fare_40": 367
+        "fare_51": 310,
+        "fare_40": 395
     },
     {
         "sheet": "Mohakhali New",
@@ -5159,8 +5159,8 @@ const ROUTES_DATA = [
         "to": "ভুয়াপুর",
         "via": "আশুলিয়া, চন্দ্রা, টাঙ্গাইল",
         "distance": 114,
-        "fare_51": 254,
-        "fare_40": 324
+        "fare_51": 274,
+        "fare_40": 349
     },
     {
         "sheet": "Mohakhali New",
@@ -5171,8 +5171,8 @@ const ROUTES_DATA = [
         "to": "দেলদুয়ার",
         "via": "আশুলিয়া, চন্দ্রা",
         "distance": 78,
-        "fare_51": 174,
-        "fare_40": 222
+        "fare_51": 187,
+        "fare_40": 239
     },
     {
         "sheet": "Mohakhali New",
@@ -5183,8 +5183,8 @@ const ROUTES_DATA = [
         "to": "সখিপুর",
         "via": "সাগরদিঘী",
         "distance": 152,
-        "fare_51": 341,
-        "fare_40": 434
+        "fare_51": 366,
+        "fare_40": 467
     },
     {
         "sheet": "Mohakhali New",
@@ -5195,8 +5195,8 @@ const ROUTES_DATA = [
         "to": "নাগরপুর",
         "via": "আশুলিয়া, চন্দ্রা, দেলদুয়ার",
         "distance": 99,
-        "fare_51": 221,
-        "fare_40": 281
+        "fare_51": 238,
+        "fare_40": 303
     },
     {
         "sheet": "Mohakhali New",
@@ -5207,8 +5207,8 @@ const ROUTES_DATA = [
         "to": "সাগরদিঘী",
         "via": "আশুলিয়া, চন্দ্রা",
         "distance": 123,
-        "fare_51": 274,
-        "fare_40": 350
+        "fare_51": 295,
+        "fare_40": 376
     },
     {
         "sheet": "Mohakhali New",
@@ -5219,8 +5219,8 @@ const ROUTES_DATA = [
         "to": "কেন্দুয়া বাজার",
         "via": "টাঙ্গাইল, মধুপুর",
         "distance": 142,
-        "fare_51": 317,
-        "fare_40": 404
+        "fare_51": 341,
+        "fare_40": 435
     },
     {
         "sheet": "Mohakhali New",
@@ -5231,8 +5231,8 @@ const ROUTES_DATA = [
         "to": "কিশোরগঞ্জ",
         "via": "ভালুকা, ময়মনসিংহ, ঈশ্বরগঞ্জ, নান্দাইল",
         "distance": 179,
-        "fare_51": 399,
-        "fare_40": 509
+        "fare_51": 430,
+        "fare_40": 548
     },
     {
         "sheet": "Mohakhali New",
@@ -5243,8 +5243,8 @@ const ROUTES_DATA = [
         "to": "ভৈরব",
         "via": "কালিগঞ্জ, ঘোড়াশাল, নরসিংদী",
         "distance": 91,
-        "fare_51": 205,
-        "fare_40": 261
+        "fare_51": 221,
+        "fare_40": 281
     },
     {
         "sheet": "Mohakhali New",
@@ -5255,8 +5255,8 @@ const ROUTES_DATA = [
         "to": "পাকুন্দিয়া",
         "via": "টঙ্গী, কাপাসিয়া",
         "distance": 106,
-        "fare_51": 238,
-        "fare_40": 304
+        "fare_51": 257,
+        "fare_40": 327
     },
     {
         "sheet": "Mohakhali New",
@@ -5267,8 +5267,8 @@ const ROUTES_DATA = [
         "to": "কিশোরগঞ্জ",
         "via": "টঙ্গী, কাপাসিয়া",
         "distance": 130,
-        "fare_51": 292,
-        "fare_40": 372
+        "fare_51": 314,
+        "fare_40": 400
     },
     {
         "sheet": "Mohakhali New",
@@ -5279,8 +5279,8 @@ const ROUTES_DATA = [
         "to": "হোসেনপুর (কিশোরগঞ্জ)",
         "via": "টঙ্গী, কাপাসিয়া",
         "distance": 137,
-        "fare_51": 308,
-        "fare_40": 392
+        "fare_51": 331,
+        "fare_40": 422
     },
     {
         "sheet": "Mohakhali New",
@@ -5291,8 +5291,8 @@ const ROUTES_DATA = [
         "to": "কটিয়াদি",
         "via": "টঙ্গী, কাপাসিয়া",
         "distance": 106,
-        "fare_51": 238,
-        "fare_40": 304
+        "fare_51": 257,
+        "fare_40": 327
     },
     {
         "sheet": "Mohakhali New",
@@ -5303,8 +5303,8 @@ const ROUTES_DATA = [
         "to": "নরসিংদী",
         "via": "টঙ্গী, কালিগঞ্জ, ঘোড়াশাল",
         "distance": 55,
-        "fare_51": 125,
-        "fare_40": 159
+        "fare_51": 134,
+        "fare_40": 171
     },
     {
         "sheet": "Mohakhali New",
@@ -5315,8 +5315,8 @@ const ROUTES_DATA = [
         "to": "চামড়া বন্দর",
         "via": "টঙ্গী, কালিগঞ্জ, ঘোঁড়াশাল, নরসিংদী, ভৈরব, কিশোরগঞ্জ",
         "distance": 140,
-        "fare_51": 314,
-        "fare_40": 401
+        "fare_51": 338,
+        "fare_40": 431
     },
     {
         "sheet": "Saidabad New",
@@ -5327,8 +5327,8 @@ const ROUTES_DATA = [
         "to": "কিশোরগঞ্জ",
         "via": "নরসিংদী, ভৈরব",
         "distance": 140,
-        "fare_51": 312,
-        "fare_40": 398
+        "fare_51": 336,
+        "fare_40": 428
     },
     {
         "sheet": "Saidabad New",
@@ -5339,8 +5339,8 @@ const ROUTES_DATA = [
         "to": "গোপালগঞ্জ",
         "via": "পদ্মা বহুমুখী সেতু, ভাঙ্গা, রাজৈর",
         "distance": 142,
-        "fare_51": 387,
-        "fare_40": 493
+        "fare_51": 411,
+        "fare_40": 524
     },
     {
         "sheet": "Saidabad New",
@@ -5351,8 +5351,8 @@ const ROUTES_DATA = [
         "to": "শরিয়তপুর",
         "via": "পদ্মা বহুমুখী সেতু, জাজিরা",
         "distance": 73,
-        "fare_51": 233,
-        "fare_40": 297
+        "fare_51": 245,
+        "fare_40": 312
     },
     {
         "sheet": "Saidabad New",
@@ -5363,8 +5363,8 @@ const ROUTES_DATA = [
         "to": "নরসিংদী",
         "via": "কাঁচপুর সেতু",
         "distance": 60,
-        "fare_51": 134,
-        "fare_40": 171
+        "fare_51": 144,
+        "fare_40": 184
     },
     {
         "sheet": "Saidabad New",
@@ -5375,8 +5375,8 @@ const ROUTES_DATA = [
         "to": "ফরিদপুর",
         "via": "পদ্মা বহুমুখী সেতু, ভাঙ্গা",
         "distance": 103,
-        "fare_51": 300,
-        "fare_40": 382
+        "fare_51": 317,
+        "fare_40": 404
     },
     {
         "sheet": "Saidabad New",
@@ -5387,8 +5387,8 @@ const ROUTES_DATA = [
         "to": "চামড়া বন্দর",
         "via": "টঙ্গী নরসিংদী, ভৈরব",
         "distance": 160,
-        "fare_51": 357,
-        "fare_40": 455
+        "fare_51": 384,
+        "fare_40": 490
     },
     {
         "sheet": "Saidabad New",
@@ -5399,8 +5399,8 @@ const ROUTES_DATA = [
         "to": "মুন্সীগঞ্জ",
         "via": "মুক্তারপুর",
         "distance": 27,
-        "fare_51": 66,
-        "fare_40": 84
+        "fare_51": 70,
+        "fare_40": 90
     },
     {
         "sheet": "Saidabad New",
@@ -5411,8 +5411,8 @@ const ROUTES_DATA = [
         "to": "শরিয়তপুর",
         "via": "বুড়িগঙ্গা ২য় সেতু, পদ্মা বহুমুখী সেতু, জাজিরা",
         "distance": 73,
-        "fare_51": 233,
-        "fare_40": 297
+        "fare_51": 245,
+        "fare_40": 312
     },
     {
         "sheet": "Saidabad New",
@@ -5423,8 +5423,8 @@ const ROUTES_DATA = [
         "to": "মনোহরদী",
         "via": "নরসিংদী",
         "distance": 84,
-        "fare_51": 187,
-        "fare_40": 239
+        "fare_51": 202,
+        "fare_40": 257
     },
     {
         "sheet": "Saidabad New",
@@ -5435,8 +5435,8 @@ const ROUTES_DATA = [
         "to": "দিঘীরপাড়",
         "via": "মুক্তারপুর, মুন্সীগঞ্জ",
         "distance": 41,
-        "fare_51": 97,
-        "fare_40": 124
+        "fare_51": 104,
+        "fare_40": 133
     },
     {
         "sheet": "Saidabad New",
@@ -5447,8 +5447,8 @@ const ROUTES_DATA = [
         "to": "মুক্তারপুর",
         "via": "নারায়ণগঞ্জ (পাগলা), টঙ্গীবাড়ী",
         "distance": 25,
-        "fare_51": 61,
-        "fare_40": 78
+        "fare_51": 66,
+        "fare_40": 84
     },
     {
         "sheet": "Saidabad New",
@@ -5459,8 +5459,8 @@ const ROUTES_DATA = [
         "to": "ভৈরব",
         "via": "নরসিংদী",
         "distance": 81,
-        "fare_51": 181,
-        "fare_40": 230
+        "fare_51": 194,
+        "fare_40": 248
     },
     {
         "sheet": "Saidabad New",
@@ -5471,8 +5471,8 @@ const ROUTES_DATA = [
         "to": "মাদারীপুর",
         "via": "পদ্মা বহুমুখী সেতু, ভাঙ্গা",
         "distance": 113,
-        "fare_51": 322,
-        "fare_40": 410
+        "fare_51": 341,
+        "fare_40": 435
     },
     {
         "sheet": "Gabtali",
@@ -5483,8 +5483,8 @@ const ROUTES_DATA = [
         "to": "ফরিদপুর",
         "via": "পাটুরিয়া",
         "distance": 109,
-        "fare_51": 314,
-        "fare_40": 400
+        "fare_51": 332,
+        "fare_40": 424
     },
     {
         "sheet": "Gabtali",
@@ -5495,8 +5495,8 @@ const ROUTES_DATA = [
         "to": "আলফাডাঙ্গা",
         "via": "পাটুরিয়া, ফরিদপুর",
         "distance": 158,
-        "fare_51": 423,
-        "fare_40": 539
+        "fare_51": 450,
+        "fare_40": 573
     },
     {
         "sheet": "Gabtali",
@@ -5507,8 +5507,8 @@ const ROUTES_DATA = [
         "to": "মোকসেদপুর",
         "via": "পাটুরিয়া, ফরিদপুর",
         "distance": 203,
-        "fare_51": 523,
-        "fare_40": 667
+        "fare_51": 558,
+        "fare_40": 711
     },
     {
         "sheet": "Gabtali",
@@ -5519,8 +5519,8 @@ const ROUTES_DATA = [
         "to": "মাদারীপুর",
         "via": "পাটুরিয়া, ফরিদপুর",
         "distance": 177,
-        "fare_51": 465,
-        "fare_40": 593
+        "fare_51": 495,
+        "fare_40": 632
     },
     {
         "sheet": "Gabtali",
@@ -5531,8 +5531,8 @@ const ROUTES_DATA = [
         "to": "রাজবাড়ী",
         "via": "পাটুরিয়া, গোয়ালন্দ",
         "distance": 108,
-        "fare_51": 311,
-        "fare_40": 397
+        "fare_51": 330,
+        "fare_40": 420
     },
     {
         "sheet": "Gabtali",
@@ -5543,8 +5543,8 @@ const ROUTES_DATA = [
         "to": "গোপালগঞ্জ",
         "via": "পাটুরিয়া, ফরিদপুর, মোকসেদপুর",
         "distance": 204,
-        "fare_51": 462,
-        "fare_40": 589
+        "fare_51": 497,
+        "fare_40": 633
     },
     {
         "sheet": "Savar EPZ",
@@ -5555,8 +5555,8 @@ const ROUTES_DATA = [
         "to": "ভৈরব",
         "via": "আবদুল্লাপুর, ঘোড়াশাল, নরসিংদী",
         "distance": 104,
-        "fare_51": 234,
-        "fare_40": 298
+        "fare_51": 252,
+        "fare_40": 321
     },
     {
         "sheet": "Gazipur",
@@ -5567,8 +5567,8 @@ const ROUTES_DATA = [
         "to": "মাওয়া ঘাট",
         "via": "কুড়িল বিশ্বরোড, রামপুরা, পোস্তগোলা সেতু",
         "distance": 72,
-        "fare_51": 169,
-        "fare_40": 215
+        "fare_51": 181,
+        "fare_40": 231
     },
     {
         "sheet": "Gabtali",
@@ -5579,8 +5579,8 @@ const ROUTES_DATA = [
         "to": "নরসিংদী (ইটাখোলা)",
         "via": ": গাবতলী, মিরপুর-1, 2, 10, 12, কালশী ফ্লাইওভার, কুড়িল বিশ্বরোড, নীলামার্কেট, কাঞ্চন ব্রীজ, ভুলতা গাউছিয়া, বানটি বাজার, মাধবদী, পাঁচদোনা, সাহে প্রতাপ হয়ে নরসিংদী (ইটাখোলা)",
         "distance": 66.7,
-        "fare_51": 152,
-        "fare_40": 194
+        "fare_51": 164,
+        "fare_40": 209
     }
 ];
 
