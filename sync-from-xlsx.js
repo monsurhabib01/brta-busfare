@@ -2,12 +2,11 @@ const XLSX = require('xlsx');
 const fs = require('fs');
 const path = require('path');
 
-const XLSX_PATH = path.join(__dirname, '111_Local route_With Fare Matrix Chart.xlsx');
+const XLSX_PATH = path.join(__dirname, '111_Local route_With Fare Matrix Chart_UPDATED.xlsx');
 const BUS_SERVICE_XLSX_PATH = path.join(__dirname, '111_Local route_With Bus Service Name.xlsx');
 const MASTER_XLSX_PATH = path.join(__dirname, '111_LocalRoute_All Locations_Bengali and English.xlsx');
 const ROUTES_OUT = path.join(__dirname, 'local_routes_data.json');
 const FARE_MATRIX_OUT = path.join(__dirname, 'local_fare_matrix.json');
-const DISTANCE_OUT = path.join(__dirname, 'local_routes_distance.json');
 const DISTANCE_MATRIX_OUT = path.join(__dirname, 'local_distance_matrix.json');
 const BUS_SERVICE_OUT = path.join(__dirname, 'local_bus_services.json');
 const STOP_EN_OUT = path.join(__dirname, 'local_stop_en.js');
@@ -48,7 +47,7 @@ function isRouteHeader(cell) {
 function isDistanceRow(cell) {
     if (!cell) return false;
     const s = String(cell);
-    return /দূরত্ব/.test(s) && /[\d০-৯]/.test(s);
+    return /দূরত(?:্ব|য)?/.test(s) && /[\d০-৯]/.test(s);
 }
 
 function parseRouteNo(header) {
@@ -83,6 +82,14 @@ function parseTotalDistance(cell) {
     const m2 = s.match(/([\d০-৯.]+)/);
     if (m2) return bnToNum(m2[1]);
     return 0;
+}
+
+function readFareSetting(ws, address, label) {
+    const value = ws[address] ? Number(ws[address].v) : NaN;
+    if (!Number.isFinite(value) || value <= 0) {
+        throw new Error('Invalid ' + label + ' in ' + address);
+    }
+    return value;
 }
 
 function cleanCellText(s) {
@@ -161,7 +168,8 @@ const NAME_NORMALIZATION = {
     'শনিরআখড়া': 'শনির আখড়া',
     'কালশীর মোড়': 'কালশী মোড়',
     'কালশি মোড়': 'কালশী মোড়',
-    'কালশিমোড়': 'কালশী মোড়'
+    'কালশিমোড়': 'কালশী মোড়',
+    'কেরানীগঞ্জ (ভাওয়ার ভিটি)': 'ভাওয়ার ভিটি (দক্ষিণ কেরানীগঞ্জ)'
 };
 
 // ===========================================================================
@@ -244,33 +252,24 @@ function extractUnicodeCellValue(cell) {
 }
 
 // ===========================================================================
-// 1. READ FARE MATRIX EXCEL (Bengali data: stops, fares, distances)
+// 1. READ FARE MATRIX EXCEL (Bengali data: stops, distances, fare settings)
 // ===========================================================================
 
 console.log('Loading', XLSX_PATH);
 const wb = XLSX.readFile(XLSX_PATH, { type: 'file', codepage: 65001 });
 const ws = wb.Sheets[wb.SheetNames[0]];
 const data = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+const fareRate = readFareSetting(ws, 'Y1', 'fare rate');
+const minimumFare = readFareSetting(ws, 'Y2', 'minimum fare');
 console.log('Loaded', data.length, 'rows from', wb.SheetNames[0]);
+console.log('Fare rate:', fareRate, 'Tk/km; minimum fare:', minimumFare, 'Tk');
 
 const routeBlocks = [];
 let i = 0;
 while (i < data.length) {
     const cell = data[i] && data[i][0] ? String(data[i][0]) : '';
     if (isRouteHeader(cell)) {
-        const block = { headerRowIdx: i, header: cell, stops: [] };
-
-        let headerIdx = -1;
-        for (let j = i - 1; j >= Math.max(0, i - 3); j--) {
-            const c = data[j] && data[j][0] ? String(data[j][0]) : '';
-            if (c.includes('কিঃমিঃ') || c.includes('কিঃ মিঃ')) {
-                headerIdx = j;
-                break;
-            }
-        }
-        block.stopNamesHeaderIdx = headerIdx;
-        block.routeNo = parseRouteNo(cell);
-        block.routeNameFull = parseRouteName(cell);
+        const block = { header: cell, routeNo: parseRouteNo(cell), routeNameFull: parseRouteName(cell), stops: [] };
 
         if (i + 1 < data.length) {
             const distCell = data[i + 1] && data[i + 1][0] ? String(data[i + 1][0]) : '';
@@ -280,7 +279,7 @@ while (i < data.length) {
             }
         }
 
-        let j = block.distanceRowIdx ? block.distanceRowIdx + 1 : i + 2;
+        let j = block.distanceRowIdx !== undefined ? block.distanceRowIdx + 1 : i + 1;
         while (j < data.length) {
             const row = data[j];
             if (!row || row.length === 0) break;
@@ -293,44 +292,23 @@ while (i < data.length) {
             if (secondCellStr.includes('কিঃমিঃ') || secondCellStr.includes('কিঃ মিঃ')) break;
 
             let stopName, kmFromOrigin;
+            const col0Num = bnToNum(firstCell);
             const col1Num = bnToNum(secondCell);
 
-            if (firstCell && !isNaN(col1Num) && (secondCell === 0 || col1Num > 0 || String(secondCell).includes('০'))) {
+            if (firstCell && Number.isFinite(col1Num) && (secondCell === 0 || col1Num > 0 || String(secondCell).includes('০'))) {
                 stopName = firstCell;
                 kmFromOrigin = col1Num;
-            } else {
-                const col0Num = bnToNum(firstCell);
-                if (!isNaN(col0Num) && secondCell && isNaN(bnToNum(secondCell))) {
-                    stopName = String(secondCell).trim();
-                    kmFromOrigin = col0Num;
-                } else {
-                    stopName = firstCell;
-                    kmFromOrigin = isNaN(col1Num) ? 0 : col1Num;
-                }
+            } else if (Number.isFinite(col0Num) && secondCell && !Number.isFinite(col1Num)) {
+                stopName = String(secondCell).trim();
+                kmFromOrigin = col0Num;
             }
 
-            const fares = [];
-            for (let c = 2; c < row.length; c++) {
-                const val = row[c];
-                if (val === null || val === undefined || val === '') {
-                    fares.push(null);
-                } else if (typeof val === 'number') {
-                    fares.push(val);
-                } else {
-                    const s = String(val).trim();
-                    if (/^[০-৯\d.]+$/.test(s)) {
-                        fares.push(bnToNum(s));
-                    } else {
-                        fares.push(null);
-                    }
-                }
+            if (stopName && Number.isFinite(kmFromOrigin)) {
+                block.stops.push({ name: stopName, km: kmFromOrigin });
             }
-
-            block.stops.push({ name: stopName, km: kmFromOrigin, fares: fares });
             j++;
         }
 
-        block.endRowIdx = j;
         routeBlocks.push(block);
         i = j;
     } else {
@@ -339,20 +317,6 @@ while (i < data.length) {
 }
 
 console.log('\nFound', routeBlocks.length, 'route blocks');
-
-function getColumnStopNames(headerIdx) {
-    if (headerIdx < 0) return [];
-    const row = data[headerIdx];
-    if (!row) return [];
-    const names = [];
-    for (let c = 2; c < row.length; c++) {
-        const val = row[c];
-        if (val !== null && val !== undefined && String(val).trim()) {
-            names.push(normalizeStopName(String(val).trim()));
-        }
-    }
-    return names;
-}
 
 // ===========================================================================
 // 2. READ ENGLISH ROUTE NAMES & SERVICE NAMES FROM BUS SERVICE EXCEL
@@ -431,7 +395,6 @@ if (bnSheetName) {
 
 const localRoutes = [];
 const fareMatrix = {};
-const distanceData = {};
 const distanceMatrix = {};
 
 for (const block of routeBlocks) {
@@ -444,75 +407,33 @@ for (const block of routeBlocks) {
         continue;
     }
 
-    const colStopNames = getColumnStopNames(block.stopNamesHeaderIdx);
-    const stopsBn = block.stops.map(s => {
-        const cleaned = normalizeStopName(s.name);
-        const unicode = ensureBengali(cleaned);
-        return unicode || cleaned;
-    }).filter(s => s.length > 0);
+    const routeStops = block.stops.map(s => {
+        const name = ensureBengali(normalizeStopName(s.name));
+        return { name, key: stopLookupKey(name), km: s.km };
+    }).filter(s => s.name && s.key && Number.isFinite(s.km));
 
-    if (stopsBn.length < 2) continue;
+    if (routeStops.length < 2) continue;
 
-    // Lookup keys for every row stop, NFC-normalized exactly like the app does.
-    const stopKeys = block.stops.map(s => {
-        const cleaned = normalizeStopName(s.name);
-        const unicode = ensureBengali(cleaned);
-        return stopLookupKey(unicode || cleaned);
-    });
-
-    // Build exact distance matrix from Column B cumulative kilometer values:
-    // distance(pair) = Math.abs(km[i] - km[j]) with the same reverse-lookup key
-    // as the fare matrix ([a, b].sort().join('|')).
-    const routeDistanceMatrix = {};
-    for (let rowIdx = 0; rowIdx < block.stops.length; rowIdx++) {
-        const kmA = block.stops[rowIdx].km;
-        if (kmA === null || kmA === undefined || isNaN(kmA)) continue;
-        for (let colIdx = rowIdx + 1; colIdx < block.stops.length; colIdx++) {
-            const kmB = block.stops[colIdx].km;
-            if (kmB === null || kmB === undefined || isNaN(kmB)) continue;
-            const dist = Math.abs(kmB - kmA);
-            if (dist <= 0) continue;
-            const key = [stopKeys[rowIdx], stopKeys[colIdx]].sort().join('|');
-            if (routeDistanceMatrix[key] === undefined) {
-                routeDistanceMatrix[key] = Math.round(dist * 10) / 10;
-            }
-        }
-    }
-
+    const stopsBn = routeStops.map(s => s.name);
     const originBn = stopsBn[0];
     const destBn = stopsBn[stopsBn.length - 1];
-
     const routeFareMatrix = {};
-    for (let rowIdx = 0; rowIdx < block.stops.length; rowIdx++) {
-        const stop = block.stops[rowIdx];
-        for (let colIdx = 0; colIdx < stop.fares.length; colIdx++) {
-            const fare = stop.fares[colIdx];
-            if (fare !== null && fare !== undefined && fare > 0) {
-                // Column index maps positionally to the same stop row in the
-                // symmetric grid, so use the ROW stop name (not the header label)
-                // to keep keys consistent with stops_bn and the reverse lookup.
-                let colKey;
-                if (block.stops[colIdx]) {
-                    colKey = stopKeys[colIdx];
-                } else if (colStopNames[colIdx]) {
-                    colKey = stopLookupKey(colStopNames[colIdx]);
-                }
-                if (!colKey) continue;
+    const routeDistanceMatrix = {};
 
-                const key = [stopKeys[rowIdx], colKey].sort().join('|');
-                if (routeFareMatrix[key] === undefined || fare < routeFareMatrix[key]) {
-                    routeFareMatrix[key] = fare;
-                }
-            }
+    for (let rowIdx = 0; rowIdx < routeStops.length; rowIdx++) {
+        for (let colIdx = rowIdx + 1; colIdx < routeStops.length; colIdx++) {
+            const distance = Math.round(Math.abs(routeStops[colIdx].km - routeStops[rowIdx].km) * 10) / 10;
+            if (distance <= 0) continue;
+            const key = [routeStops[rowIdx].key, routeStops[colIdx].key].sort().join('|');
+            routeDistanceMatrix[key] = distance;
+            routeFareMatrix[key] = Math.max(minimumFare, Math.round(distance * fareRate));
         }
     }
 
     let routeNameBn = block.routeNameFull.replace(/\s+/g, ' ').trim();
     if (!routeNameBn) routeNameBn = originBn + ' হতে ' + destBn;
 
-    const totalDist = block.totalDistance || 0;
-
-    // Direct English from the Excel sheet
+    const totalDist = block.totalDistance || routeStops[routeStops.length - 1].km;
     const engInfo = englishMap[block.routeNo] || {};
     const routeNameEn = engInfo.route_desc_en || '';
 
@@ -527,12 +448,11 @@ for (const block of routeBlocks) {
         stops_bn: stopsBn,
         stops_en: [],
         distance_km: totalDist,
-        rate_tk: 2.53,
-        min_fare: 10
+        rate_tk: fareRate,
+        min_fare: minimumFare
     });
 
     fareMatrix[block.routeNo] = routeFareMatrix;
-    distanceData[block.routeNo] = { distance_km: totalDist, rate_tk: 2.53, min_fare: 10 };
     distanceMatrix[block.routeNo] = routeDistanceMatrix;
 
     console.log('  ' + block.routeNo + ': ' + stopsBn.length + ' stops, ' + Object.keys(routeFareMatrix).length + ' fare pairs, ' + Object.keys(routeDistanceMatrix).length + ' dist pairs, ' + totalDist + ' km | EN: ' + (routeNameEn || '(none)').substring(0, 60));
@@ -546,7 +466,6 @@ localRoutes.sort((a, b) => {
 
 fs.writeFileSync(ROUTES_OUT, JSON.stringify(localRoutes, null, 2), 'utf8');
 fs.writeFileSync(FARE_MATRIX_OUT, JSON.stringify(fareMatrix, null, 2), 'utf8');
-fs.writeFileSync(DISTANCE_OUT, JSON.stringify(distanceData, null, 2), 'utf8');
 fs.writeFileSync(DISTANCE_MATRIX_OUT, JSON.stringify(distanceMatrix, null, 2), 'utf8');
 
 // ===========================================================================

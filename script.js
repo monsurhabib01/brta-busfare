@@ -5586,7 +5586,6 @@ const ROUTES_DATA = [
 
 if (typeof LOCAL_ROUTES_DATA === 'undefined') var LOCAL_ROUTES_DATA = [];
 if (typeof LOCAL_FARE_MATRIX === 'undefined') var LOCAL_FARE_MATRIX = {};
-if (typeof LOCAL_ROUTES_DISTANCE === 'undefined') var LOCAL_ROUTES_DISTANCE = {};
 if (typeof LOCAL_DISTANCE_MATRIX === 'undefined') var LOCAL_DISTANCE_MATRIX = {};
 
 
@@ -6989,8 +6988,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localToDropdown.classList.remove('active');
     }
 
-    // LOCAL_FARE_MATRIX and LOCAL_ROUTES_DISTANCE are loaded from JSON files
-
     function getLocalExactFare(routeNo, stop1, stop2) {
         const routeMatrix = LOCAL_FARE_MATRIX[routeNo];
         if (!routeMatrix) return null;
@@ -7573,12 +7570,10 @@ document.addEventListener('DOMContentLoaded', () => {
         Promise.all([
             fetch('./local_routes_data.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
             fetch('./local_fare_matrix.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
-            fetch('./local_routes_distance.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
             fetch('./local_distance_matrix.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
-        ]).then(([routes, fareMatrix, distData, distMatrix]) => {
+        ]).then(([routes, fareMatrix, distMatrix]) => {
             if (routes.length > 0) LOCAL_ROUTES_DATA = routes;
             if (Object.keys(fareMatrix).length > 0) LOCAL_FARE_MATRIX = fareMatrix;
-            if (Object.keys(distData).length > 0) LOCAL_ROUTES_DISTANCE = distData;
             if (Object.keys(distMatrix).length > 0) LOCAL_DISTANCE_MATRIX = distMatrix;
             invalidateStopsCache();
             populateStopSelects();
